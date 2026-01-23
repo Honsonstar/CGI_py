@@ -1,0 +1,73 @@
+ERROR conda.cli.main_run:execute(33): Subprocess for 'conda run ['python', 'main.py', '--label_file', 'datasets_csv/reports_clean/tcga_blca_clinical.csv', '--study', 'tcga_blca', '--split_dir', 'splits', '--data_root_dir', 'datasets_csv/reports_clean', '--task', 'survival', '--which_splits', '5foldcv_ramdom', '--omics_dir', 'datasets_csv/raw_rna_data/combine/blca', '--results_dir', 'results/blca_only_text_v3', '--batch_size', '1', '--lr', '0.0005', '--opt', 'radam', '--reg', '0.0001', '--alpha_surv', '0.5', '--weighted_sample', '--max_epochs', '20', '--label_col', 'survival_months_dss', '--k', '5', '--bag_loss', 'nll_surv', '--type_of_path', 'custom', '--modality', 'snn', '--enable_multitask', '--multitask_weight', '0.12', '--ab_model', '1']' command failed.  (See above for error)
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/causal/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3653, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 147, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 176, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'censorship_dss'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "main.py", line 284, in <module>
+    args.dataset_factory = SurvivalDatasetFactory(
+  File "/root/autodl-tmp/newcfdemo/CFdemo_gene_text_copy/datasets/dataset_survival.py", line 96, in __init__
+    self._setup_metadata_and_labels(eps)
+  File "/root/autodl-tmp/newcfdemo/CFdemo_gene_text_copy/datasets/dataset_survival.py", line 291, in _setup_metadata_and_labels
+    uncensored_df = self._clean_label_data()
+  File "/root/autodl-tmp/newcfdemo/CFdemo_gene_text_copy/datasets/dataset_survival.py", line 381, in _clean_label_data
+    uncensored_df = self.patients_df[self.patients_df[self.censorship_var] < 1]
+  File "/root/miniconda3/envs/causal/lib/python3.8/site-packages/pandas/core/frame.py", line 3761, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/root/miniconda3/envs/causal/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 3655, in get_loc
+    raise KeyError(key) from err
+KeyError: 'censorship_dss'
+
+cuda
+Split dir: splits/5foldcv_ramdom/tcga_blca
+
+################# Settings ###################
+num_splits:  5
+k_start:  -1
+k_end:  -1
+task:  survival
+max_epochs:  20
+results_dir:  ./results/results/blca_only_text_v3/tcga_blca__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12
+lr:  0.0005
+experiment:  tcga_blca
+reg:  0.0001
+bag_loss:  nll_surv
+seed:  1
+weighted_sample:  True
+opt:  radam
+num_patches:  4000
+dropout:  0.25
+type_of_path:  custom
+split_dir:  splits/5foldcv_ramdom/tcga_blca
+enable_multitask:  True
+multitask_weight:  0.12
+
+Loaded clinical data from: ./datasets_csv/clinical_data/tcga_blca_clinical.csv
+Clinical data shape: (423, 13)
+Clinical data index (case_id) samples: ['TCGA-2F-A9KO', 'TCGA-2F-A9KP', 'TCGA-2F-A9KP', 'TCGA-2F-A9KQ', 'TCGA-2F-A9KR']
+Available stages: stage
+III        190
+II          94
+unknown     77
+IV          59
+I            3
+Name: count, dtype: int64
+Valid stage mapping (excluding '0'): {'I': 0, 'II': 1, 'III': 2, 'IV': 3, 'unknown': 4}
+Number of valid stage classes: 5
+Valid stage distribution:
+  III: 190
+  II: 94
+  unknown: 77
+  IV: 59
+  I: 3
+Using direct case_id matching for merging
+[DEBUG] Column "censorship_dss" not found!
+[DEBUG] Available columns: ['case_id', 'patient_filename', 'text_report', 'stage', 'grade', 'subtype']
+
