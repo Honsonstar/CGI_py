@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>文本关键词可视化</title>
+        <style>
+            body { 
+                font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+                padding: 30px; 
+                max-width: 1200px; 
+                margin: 0 auto;
+                background-color: #f9f9f9;
+            }
+            h2 {
+                color: #333;
+                border-bottom: 3px solid #4CAF50;
+                padding-bottom: 10px;
+            }
+            .legend {
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #e8f5e9;
+                border-left: 4px solid #4CAF50;
+                border-radius: 5px;
+            }
+            .highlighted-text { 
+                line-height: 2.2; 
+                font-size: 16px;
+                padding: 20px;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .word { 
+                padding: 3px 6px; 
+                margin: 0 2px;
+                border-radius: 4px;
+                display: inline-block;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>📊 文本关键词重要性可视化</h2>
+        <div class="legend">
+            <strong>说明：</strong>颜色越黄（越亮）代表模型越关注该词，灰色词为停用词或标点
+        </div>
+        <div class="highlighted-text">
+    <span class="word" style="background-color: rgb(255, 255, 172);">please</span>
+<span class="word" style="background-color: rgb(255, 255, 138);">note</span>
+<span class="word" style="background-color: rgb(255, 255, 134);">that</span>
+<span class="word" style="background-color: rgb(255, 255, 157);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 158);">operation</span>
+<span class="word" style="background-color: rgb(255, 255, 141);">date</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 142);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 126);">medical</span>
+<span class="word" style="background-color: rgb(255, 255, 122);">record</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 118);">and</span>
+<span class="word" style="background-color: rgb(255, 255, 145);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 154);">date</span>
+<span class="word" style="background-color: rgb(255, 255, 120);">that</span>
+<span class="word" style="background-color: rgb(255, 255, 187);">tumor</span>
+<span class="word" style="background-color: rgb(255, 255, 181);">was</span>
+<span class="word" style="background-color: rgb(255, 255, 154);">collected</span>
+<span class="word" style="background-color: rgb(255, 255, 145);">for</span>
+<span class="word" style="background-color: rgb(255, 255, 152);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 138);">study</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">are</span>
+<span class="word" style="background-color: rgb(255, 255, 149);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 194);">same</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 140);">but</span>
+<span class="word" style="background-color: rgb(255, 255, 150);">the</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 169);">date</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 150);">pathology</span>
+<span class="word" style="background-color: rgb(255, 255, 105);">report</span>
+<span class="word" style="background-color: rgb(255, 255, 184);">was</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 167);">path</span>
+<span class="word" style="background-color: rgb(255, 255, 126);">report</span>
+<span class="word" style="background-color: rgb(255, 255, 174);">are</span>
+<span class="word" style="background-color: rgb(255, 255, 149);">correct</span>
+<span class="word" style="background-color: rgb(255, 255, 107);">and</span>
+<span class="word" style="background-color: rgb(255, 255, 152);">there</span>
+<span class="word" style="background-color: rgb(255, 255, 159);">is</span>
+<span class="word" style="background-color: rgb(255, 255, 115);">no</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">other</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">path</span>
+<span class="word" style="background-color: rgb(255, 255, 119);">report</span>
+<span class="word" style="background-color: rgb(255, 255, 144);">for</span>
+<span class="word" style="background-color: rgb(255, 255, 118);">this</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">patient</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 145);">content</span>
+<span class="word" style="background-color: rgb(255, 255, 161);">in</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">path</span>
+<span class="word" style="background-color: rgb(255, 255, 119);">report</span>
+<span class="word" style="background-color: rgb(255, 255, 153);">corresponds</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">to</span>
+<span class="word" style="background-color: rgb(255, 255, 160);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 143);">content</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">the</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">operative</span>
+<span class="word" style="background-color: rgb(255, 255, 116);">report</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">(</span>
+<span class="word" style="background-color: rgb(255, 255, 174);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 171);">term</span>
+<span class="word" style="background-color: rgb(255, 255, 151);">of</span>
+<span class="word" style="background-color: rgb(255, 255, 167);">resected</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 176);">specimen</span>
+<span class="word" style="background-color: rgb(255, 255, 188);">sent</span>
+<span class="word" style="background-color: rgb(255, 255, 179);">to</span>
+<span class="word" style="background-color: rgb(255, 255, 152);">pathology</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 193);">clinical</span>
+<span class="word" style="background-color: rgb(255, 255, 171);">data</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">:</span>
+<span class="word" style="background-color: rgb(255, 255, 134);">this</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">is</span>
+<span class="word" style="background-color: rgb(255, 255, 140);">a</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">-</span>
+<span class="word" style="background-color: rgb(255, 255, 166);">year</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">-</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">old</span>
+<span class="word" style="background-color: rgb(255, 255, 204);">man</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">with</span>
+<span class="word" style="background-color: rgb(255, 255, 141);">a</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">clinical</span>
+<span class="word" style="background-color: rgb(255, 255, 176);">history</span>
+<span class="word" style="background-color: rgb(255, 255, 128);">of</span>
+<span class="word" style="background-color: rgb(255, 255, 168);">left</span>
+<span class="word" style="background-color: rgb(255, 255, 170);">tonsil</span>
+<span class="word" style="background-color: rgb(255, 255, 187);">tumor</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 153);">procedure</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">is</span>
+<span class="word" style="background-color: rgb(255, 255, 144);">a</span>
+<span class="word" style="background-color: rgb(255, 255, 172);">left</span>
+<span class="word" style="background-color: rgb(255, 255, 139);">common</span>
+<span class="word" style="background-color: rgb(255, 255, 160);">tc</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">resection</span>
+<span class="word" style="background-color: rgb(255, 255, 149);">with</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">left</span>
+<span class="word" style="background-color: rgb(255, 255, 224);">radial</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">f</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 151);">f</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 127);">gross</span>
+<span class="word" style="background-color: rgb(255, 255, 199);">description</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">:</span>
+<span class="word" style="background-color: rgb(255, 255, 147);">a</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 200);">received</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 183);">formalin</span>
+<span class="word" style="background-color: rgb(255, 255, 158);">designated</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">"</span>
+<span class="word" style="background-color: rgb(255, 255, 158);">left</span>
+<span class="word" style="background-color: rgb(255, 255, 200);">neck</span>
+<span class="word" style="background-color: rgb(255, 255, 147);">dissection</span>
+<span class="word" style="background-color: rgb(255, 255, 152);">dl</span>
+<span class="word" style="background-color: rgb(255, 255, 172);">level</span>
+<span class="word" style="background-color: rgb(255, 255, 177);">iii</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 149);">ds</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 172);">level</span>
+<span class="word" style="background-color: rgb(255, 255, 197);">ii</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">"</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">is</span>
+<span class="word" style="background-color: rgb(255, 255, 144);">a</span>
+<span class="word" style="background-color: rgb(255, 255, 141);">9</span>
+<span class="word" style="background-color: rgb(255, 255, 191);">cm</span>
+<span class="word" style="background-color: rgb(255, 255, 154);">x</span>
+<span class="word" style="background-color: rgb(255, 255, 127);">2</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 142);">8</span>
+<span class="word" style="background-color: rgb(255, 255, 187);">cm</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">x</span>
+<span class="word" style="background-color: rgb(255, 255, 158);">1</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 144);">5</span>
+<span class="word" style="background-color: rgb(255, 255, 186);">cm</span>
+<span class="word" style="background-color: rgb(255, 255, 127);">yellow</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">fibrofatty</span>
+<span class="word" style="background-color: rgb(255, 255, 161);">tissue</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">with</span>
+<span class="word" style="background-color: rgb(255, 255, 195);">two</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">long</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 168);">sutures</span>
+<span class="word" style="background-color: rgb(255, 255, 154);">on</span>
+<span class="word" style="background-color: rgb(255, 255, 220);">one</span>
+<span class="word" style="background-color: rgb(255, 255, 181);">side</span>
+<span class="word" style="background-color: rgb(255, 255, 175);">designated</span>
+<span class="word" style="background-color: rgb(255, 255, 178);">as</span>
+<span class="word" style="background-color: rgb(255, 255, 210);">superior</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">surface</span>
+<span class="word" style="background-color: rgb(255, 255, 133);">and</span>
+<span class="word" style="background-color: rgb(255, 255, 188);">two</span>
+<span class="word" style="background-color: rgb(255, 255, 174);">short</span>
+<span class="word" style="background-color: rgb(255, 255, 159);">sutures</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 142);">on</span>
+<span class="word" style="background-color: rgb(255, 255, 200);">one</span>
+<span class="word" style="background-color: rgb(255, 255, 171);">side</span>
+<span class="word" style="background-color: rgb(255, 255, 171);">designated</span>
+<span class="word" style="background-color: rgb(255, 255, 167);">as</span>
+<span class="word" style="background-color: rgb(255, 255, 183);">inferior</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">portion</span>
+<span class="word" style="background-color: rgb(255, 255, 145);">there</span>
+<span class="word" style="background-color: rgb(255, 255, 165);">are</span>
+<span class="word" style="background-color: rgb(255, 255, 130);">no</span>
+<span class="word" style="background-color: rgb(255, 255, 178);">apparent</span>
+<span class="word" style="background-color: rgb(255, 255, 188);">masses</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 161);">identified</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 167);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 165);">specimen</span>
+<span class="word" style="background-color: rgb(255, 255, 171);">is</span>
+<span class="word" style="background-color: rgb(255, 255, 217);">separated</span>
+<span class="word" style="background-color: rgb(255, 255, 175);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 154);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 188);">mid</span>
+<span class="word" style="background-color: rgb(255, 255, 172);">portion</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 165);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 201);">superior</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 169);">portion</span>
+<span class="word" style="background-color: rgb(255, 255, 201);">represents</span>
+<span class="word" style="background-color: rgb(255, 255, 181);">levei</span>
+<span class="word" style="background-color: rgb(255, 255, 213);">ii</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">soft</span>
+<span class="word" style="background-color: rgb(255, 255, 171);">tissue</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 195);">while</span>
+<span class="word" style="background-color: rgb(255, 255, 176);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 202);">inferior</span>
+<span class="word" style="background-color: rgb(255, 255, 151);">portion</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 224);">represents</span>
+<span class="word" style="background-color: rgb(255, 255, 187);">level</span>
+<span class="word" style="background-color: rgb(255, 255, 189);">iii</span>
+<span class="word" style="background-color: rgb(255, 255, 159);">soft</span>
+<span class="word" style="background-color: rgb(255, 255, 183);">tissue</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 151);">there</span>
+<span class="word" style="background-color: rgb(255, 255, 170);">are</span>
+<span class="word" style="background-color: rgb(255, 255, 183);">multiple</span>
+<span class="word" style="background-color: rgb(255, 255, 184);">lymph</span>
+<span class="word" style="background-color: rgb(255, 255, 175);">nodes</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">identified</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 222);">representative</span>
+<span class="word" style="background-color: rgb(255, 255, 210);">sections</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">are</span>
+<span class="word" style="background-color: rgb(255, 255, 170);">submitted</span>
+<span class="word" style="background-color: rgb(255, 255, 168);">as</span>
+<span class="word" style="background-color: rgb(255, 255, 193);">follows</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">:</span>
+<span class="word" style="background-color: rgb(255, 255, 147);">a1</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 144);">a2</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">-</span>
+<span class="word" style="background-color: rgb(255, 255, 188);">level</span>
+<span class="word" style="background-color: rgb(255, 255, 221);">ii</span>
+<span class="word" style="background-color: rgb(255, 255, 187);">lymph</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 199);">nodes</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">(</span>
+<span class="word" style="background-color: rgb(255, 255, 192);">al</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">-</span>
+<span class="word" style="background-color: rgb(255, 255, 241);">twelve</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">(</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">12</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgb(255, 255, 201);">potential</span>
+<span class="word" style="background-color: rgb(255, 255, 191);">lymph</span>
+<span class="word" style="background-color: rgb(255, 255, 179);">nodes</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 157);">a2</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">-</span>
+<span class="word" style="background-color: rgb(255, 255, 201);">two</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">(</span>
+<span class="word" style="background-color: rgb(255, 255, 154);">2</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgb(255, 255, 197);">potential</span>
+<span class="word" style="background-color: rgb(255, 255, 180);">lymph</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 196);">nodes</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 141);">a3</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 149);">a4</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">-</span>
+<span class="word" style="background-color: rgb(255, 255, 178);">level</span>
+<span class="word" style="background-color: rgb(255, 255, 187);">iii</span>
+<span class="word" style="background-color: rgb(255, 255, 178);">lymph</span>
+<span class="word" style="background-color: rgb(255, 255, 187);">nodes</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">(</span>
+<span class="word" style="background-color: rgb(255, 255, 127);">a3</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">-</span>
+<span class="word" style="background-color: rgb(255, 255, 184);">thirteen</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">(</span>
+<span class="word" style="background-color: rgb(255, 255, 133);">13</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgb(255, 255, 202);">potential</span>
+<span class="word" style="background-color: rgb(255, 255, 192);">lymph</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 189);">nodes</span>
+<span class="word" style="background-color: rgb(255, 255, 143);">and</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">a4</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">-</span>
+<span class="word" style="background-color: rgb(255, 255, 218);">three</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">(</span>
+<span class="word" style="background-color: rgb(255, 255, 152);">3</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgb(255, 255, 199);">potential</span>
+<span class="word" style="background-color: rgb(255, 255, 193);">lymph</span>
+<span class="word" style="background-color: rgb(255, 255, 197);">nodes</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 179);">b</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 211);">received</span>
+<span class="word" style="background-color: rgb(255, 255, 159);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 193);">formalin</span>
+<span class="word" style="background-color: rgb(255, 255, 172);">designated</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">"</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">left</span>
+<span class="word" style="background-color: rgb(255, 255, 182);">level</span>
+<span class="word" style="background-color: rgb(255, 255, 161);">ia</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">"</span>
+<span class="word" style="background-color: rgb(255, 255, 169);">are</span>
+<span class="word" style="background-color: rgb(255, 255, 201);">two</span>
+<span class="word" style="background-color: rgb(255, 255, 165);">tissue</span>
+<span class="word" style="background-color: rgb(255, 255, 194);">irregular</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 153);">soft</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">yellow</span>
+<span class="word" style="background-color: rgb(255, 255, 142);">fatty</span>
+<span class="word" style="background-color: rgb(255, 255, 161);">tissue</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 132);">measuring</span>
+<span class="word" style="background-color: rgb(255, 255, 136);">2</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 151);">0</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">x</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">1</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 145);">0</span>
+<span class="word" style="background-color: rgb(255, 255, 154);">x</span>
+<span class="word" style="background-color: rgb(255, 255, 159);">0</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 157);">9</span>
+<span class="word" style="background-color: rgb(255, 255, 194);">cm</span>
+<span class="word" style="background-color: rgb(255, 255, 135);">and</span>
+<span class="word" style="background-color: rgb(255, 255, 173);">1</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">0</span>
+<span class="word" style="background-color: rgb(255, 255, 175);">x</span>
+<span class="word" style="background-color: rgb(255, 255, 168);">0</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 165);">5</span>
+<span class="word" style="background-color: rgb(255, 255, 182);">x</span>
+<span class="word" style="background-color: rgb(255, 255, 176);">0</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 135);">4</span>
+<span class="word" style="background-color: rgb(255, 255, 197);">cm</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 176);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 171);">greatest</span>
+<span class="word" style="background-color: rgb(255, 255, 167);">dimensions</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">there</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">are</span>
+<span class="word" style="background-color: rgb(255, 255, 201);">four</span>
+<span class="word" style="background-color: rgb(255, 255, 189);">potential</span>
+<span class="word" style="background-color: rgb(255, 255, 182);">lymph</span>
+<span class="word" style="background-color: rgb(255, 255, 183);">nodes</span>
+<span class="word" style="background-color: rgb(255, 255, 157);">identified</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 145);">all</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 168);">are</span>
+<span class="word" style="background-color: rgb(255, 255, 169);">submitted</span>
+<span class="word" style="background-color: rgb(255, 255, 180);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 183);">cassette</span>
+<span class="word" style="background-color: rgb(255, 255, 174);">b1</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">c</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">)</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 196);">received</span>
+<span class="word" style="background-color: rgb(255, 255, 161);">fresh</span>
+<span class="word" style="background-color: rgb(255, 255, 143);">designated</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">"</span>
+<span class="word" style="background-color: rgb(255, 255, 206);">composite</span>
+<span class="word" style="background-color: rgb(255, 255, 146);">resection</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">"</span>
+<span class="word" style="background-color: rgb(255, 255, 151);">is</span>
+<span class="word" style="background-color: rgb(255, 255, 198);">an</span>
+<span class="word" style="background-color: rgb(255, 255, 195);">irregular</span>
+<span class="word" style="background-color: rgb(255, 255, 177);">piece</span>
+<span class="word" style="background-color: rgb(255, 255, 135);">of</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 158);">soft</span>
+<span class="word" style="background-color: rgb(255, 255, 167);">tissue</span>
+<span class="word" style="background-color: rgb(255, 255, 133);">and</span>
+<span class="word" style="background-color: rgb(255, 255, 184);">bone</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 165);">measuring</span>
+<span class="word" style="background-color: rgb(255, 255, 158);">7</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 154);">0</span>
+<span class="word" style="background-color: rgb(255, 255, 166);">x</span>
+<span class="word" style="background-color: rgb(255, 255, 138);">6</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 163);">0</span>
+<span class="word" style="background-color: rgb(255, 255, 160);">x</span>
+<span class="word" style="background-color: rgb(255, 255, 140);">4</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 169);">0</span>
+<span class="word" style="background-color: rgb(255, 255, 187);">cm</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">in</span>
+<span class="word" style="background-color: rgb(255, 255, 191);">greatest</span>
+<span class="word" style="background-color: rgb(255, 255, 173);">dimension</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 156);">the</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 194);">bone</span>
+<span class="word" style="background-color: rgb(255, 255, 192);">is</span>
+<span class="word" style="background-color: rgb(255, 255, 136);">grossly</span>
+<span class="word" style="background-color: rgb(255, 255, 140);">consistent</span>
+<span class="word" style="background-color: rgb(255, 255, 170);">with</span>
+<span class="word" style="background-color: rgb(255, 255, 147);">a</span>
+<span class="word" style="background-color: rgb(255, 255, 169);">portion</span>
+<span class="word" style="background-color: rgb(255, 255, 179);">mandible</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 174);">including</span>
+<span class="word" style="background-color: rgb(255, 255, 198);">part</span>
+<span class="word" style="background-color: rgb(255, 255, 130);">of</span>
+<span class="word" style="background-color: rgb(255, 255, 144);">the</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 188);">ramus</span>
+<span class="word" style="background-color: rgb(255, 255, 116);">and</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">posterior</span>
+<span class="word" style="background-color: rgb(255, 255, 193);">part</span>
+<span class="word" style="background-color: rgb(255, 255, 133);">of</span>
+<span class="word" style="background-color: rgb(255, 255, 143);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 194);">body</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 138);">on</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 176);">medial</span>
+<span class="word" style="background-color: rgb(255, 255, 206);">aspect</span>
+<span class="word" style="background-color: rgb(255, 255, 142);">of</span>
+<span class="word" style="background-color: rgb(255, 255, 157);">the</span>
+<span class="word" style="background-color: rgb(255, 255, 178);">bone</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 142);">there</span>
+<span class="word" style="background-color: rgb(255, 255, 169);">is</span>
+<span class="word" style="background-color: rgb(255, 255, 151);">a</span>
+<span class="word" style="background-color: rgb(255, 255, 188);">irregular</span>
+<span class="word" style="background-color: rgb(255, 255, 164);">soft</span>
+<span class="word" style="background-color: rgb(255, 255, 162);">tissue</span>
+<span class="word" style="background-color: rgb(255, 255, 217);">partially</span>
+<span class="word" style="background-color: rgb(255, 255, 238);">covered</span>
+<span class="word" style="background-color: rgb(255, 255, 157);">with</span>
+<span class="word" style="background-color: rgb(255, 255, 165);">pink</span>
+<span class="word" style="background-color: rgb(255, 255, 177);">mucosa</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 146);">on</span>
+<span class="word" style="background-color: rgb(255, 255, 177);">the</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">.</span>
+<span class="word" style="background-color: rgb(255, 255, 182);">anteroinferior</span>
+<span class="word" style="background-color: rgb(255, 255, 178);">aspect</span>
+<span class="word" style="background-color: rgba(200, 200, 200, 0.3);">,</span>
+<span class="word" style="background-color: rgb(255, 255, 142);">a</span>
+<span class="word" style="background-color: rgb(255, 255, 199);">round</span>
+<span class="word" style="background-color: rgb(255, 255, 179);">lobule</span>
+<span class="word" style="background-color: rgb(255, 255, 141);">of</span>
+<span class="word" style="background-color: rgb(255, 255, 155);">normal</span>
+<span class="word" style="background-color: rgb(255, 255, 179);">appearing</span>
+<span class="word" style="background-color: rgb(255, 255, 173);">salivary</span>
+
+        </div>
+    </body>
+    </html>
+    

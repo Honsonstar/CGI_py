@@ -1,0 +1,2308 @@
+cuda
+
+[DEBUG] ------------------------------------------------
+[DEBUG] 当前工作目录 (CWD): /root/autodl-tmp/newcfdemo/CFdemo
+[DEBUG] 传入的 split_dir 参数: splits/5foldcv_ramdom/tcga_coadread
+[DEBUG] 完整检查路径: /root/autodl-tmp/newcfdemo/CFdemo/splits/5foldcv_ramdom/tcga_coadread
+[DEBUG] 路径是否存在? : True
+[DEBUG] ------------------------------------------------
+
+Split dir: splits/5foldcv_ramdom/tcga_coadread
+
+################# Settings ###################
+num_splits:  5
+k_start:  -1
+k_end:  -1
+task:  survival
+max_epochs:  20
+results_dir:  ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12
+lr:  0.0005
+experiment:  tcga_coadread
+reg:  0.0001
+bag_loss:  nll_surv
+seed:  1
+weighted_sample:  True
+opt:  radam
+num_patches:  4000
+dropout:  0.25
+type_of_path:  custom
+split_dir:  splits/5foldcv_ramdom/tcga_coadread
+enable_multitask:  True
+multitask_weight:  0.12
+
+🧹 [Dataset] Dropping non-feature columns: ['OS']
+Loaded clinical data from: ./datasets_csv/clinical_data/tcga_coadread_clinical.csv
+Clinical data shape: (274, 18)
+Clinical data index (case_id) samples: ['TCGA-EI-7004', 'TCGA-D5-6926', 'TCGA-AY-5543', 'TCGA-CK-4951', 'TCGA-F4-6703']
+Available stages: stage
+III    182
+II      45
+IV      39
+I        7
+0        1
+Name: count, dtype: int64
+Valid stage mapping (excluding '0'): {'I': 0, 'II': 1, 'III': 2, 'IV': 3}
+Number of valid stage classes: 4
+Valid stage distribution:
+  III: 182
+  II: 45
+  IV: 39
+  I: 7
+Using direct case_id matching for merging
+[DEBUG] -------------------------------------
+[DEBUG] 现有列名: ['case_id', 'patient_filename', 'text_report', 'stage', 'grade', 'subtype', 'Unnamed: 0', 'slide_id', 'age', 'site', 'survival_months', 'survival_months_dss', 'survival_months_pfi', 'censorship', 'censorship_dss', 'censorship_pfi', 'is_female', 'oncotree_code', 'train']
+[DEBUG] 想找的列: |censorship_dss|
+[DEBUG] -------------------------------------
+label column: survival_months_dss
+number of cases 270
+number of classes: 8
+multitask learning enabled
+number of stage classes: 4
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 0
+
+Training Fold 0!
+
+Init train/val splits... 
+Done!
+Training on 42 samples
+Validating on 10 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 18 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=18)，自动禁用通路编码器，改用直接拼接模式。
+
+==============================
+Model: snn
+总参数量 (Total):      0.1092 B
+可训练参数 (Trainable): 0.1092 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier                                | Params: 4,100
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 4,864
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier.0                                 | Params: 262,400
+Layer: stage_classifier.2                                 | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109245720
+Total number of trainable parameters: 109245720
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 0.287
+Epoch: 0, train_loss: 1.3738, survival_loss: 50.2768, stage_loss: 61.8616, train_c_index: 0.4611, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.3947
+batch: 0, loss: 1.302
+Epoch: 1, train_loss: 1.0954, survival_loss: 40.6479, stage_loss: 44.6617, train_c_index: 0.4076, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.4211
+batch: 0, loss: 0.791
+Epoch: 2, train_loss: 1.1589, survival_loss: 43.0190, stage_loss: 47.1303, train_c_index: 0.5551, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.4211
+batch: 0, loss: 2.482
+Epoch: 3, train_loss: 1.3750, survival_loss: 52.2973, stage_loss: 45.4326, train_c_index: 0.4122, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.4211
+batch: 0, loss: 1.166
+Epoch: 4, train_loss: 1.3543, survival_loss: 50.3998, stage_loss: 54.0216, train_c_index: 0.3813, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.4211
+batch: 0, loss: 1.431
+Epoch: 5, train_loss: 1.2538, survival_loss: 47.4514, stage_loss: 43.3930, train_c_index: 0.5629, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.4211
+batch: 0, loss: 0.260
+Epoch: 6, train_loss: 1.2857, survival_loss: 49.0426, stage_loss: 41.2908, train_c_index: 0.4850, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.5263
+batch: 0, loss: 1.696
+Epoch: 7, train_loss: 1.2242, survival_loss: 47.4391, stage_loss: 33.1410, train_c_index: 0.5933, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6316
+batch: 0, loss: 1.858
+Epoch: 8, train_loss: 1.3350, survival_loss: 49.7103, stage_loss: 52.9822, train_c_index: 0.5249, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.6316
+batch: 0, loss: 1.150
+Epoch: 9, train_loss: 1.1999, survival_loss: 43.7192, stage_loss: 55.6400, train_c_index: 0.4602, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6842
+batch: 0, loss: 0.163
+Epoch: 10, train_loss: 1.4462, survival_loss: 54.9714, stage_loss: 48.0768, train_c_index: 0.5171, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.6842
+batch: 0, loss: 1.696
+Epoch: 11, train_loss: 1.2248, survival_loss: 45.8846, stage_loss: 46.3091, train_c_index: 0.5488, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.7105
+batch: 0, loss: 0.661
+Epoch: 12, train_loss: 1.5276, survival_loss: 59.0924, stage_loss: 42.2358, train_c_index: 0.4601, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.7105
+batch: 0, loss: 0.293
+Epoch: 13, train_loss: 1.1831, survival_loss: 43.9248, stage_loss: 48.0505, train_c_index: 0.3960, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.7105
+batch: 0, loss: 0.286
+Epoch: 14, train_loss: 1.3128, survival_loss: 50.8662, stage_loss: 35.5864, train_c_index: 0.5448, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.7105
+batch: 0, loss: 0.691
+Epoch: 15, train_loss: 1.0543, survival_loss: 38.8411, stage_loss: 45.3412, train_c_index: 0.5445, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.7105
+batch: 0, loss: 0.573
+Epoch: 16, train_loss: 1.4892, survival_loss: 57.1574, stage_loss: 44.9110, train_c_index: 0.5106, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7368
+batch: 0, loss: 0.950
+Epoch: 17, train_loss: 0.9851, survival_loss: 35.8382, stage_loss: 46.1381, train_c_index: 0.5748, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.7895
+batch: 0, loss: 0.252
+Epoch: 18, train_loss: 1.2548, survival_loss: 47.7486, stage_loss: 41.2640, train_c_index: 0.5105, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.7895
+batch: 0, loss: 2.634
+Epoch: 19, train_loss: 1.2166, survival_loss: 46.4409, stage_loss: 38.7952, train_c_index: 0.4826, stage_acc: 0.0000
+✓ [TCGA-AG-4021] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-G4-6626] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-F4-6459] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-NH-A50U] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-5M-AAT4] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6964] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6901] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-CK-5912] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-D5-6537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+✓ [TCGA-AD-6888] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase0
+Best Val c-index: 0.7895
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold0_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold0_km_plot.png
+Saving results...
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 1
+
+Training Fold 1!
+
+Init train/val splits... 
+Done!
+Training on 42 samples
+Validating on 11 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 18 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=18)，自动禁用通路编码器，改用直接拼接模式。
+
+==============================
+Model: snn
+总参数量 (Total):      0.1092 B
+可训练参数 (Trainable): 0.1092 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier                                | Params: 4,100
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 4,864
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier.0                                 | Params: 262,400
+Layer: stage_classifier.2                                 | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109245720
+Total number of trainable parameters: 109245720
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 2.533
+Epoch: 0, train_loss: 1.2612, survival_loss: 44.4346, stage_loss: 71.1405, train_c_index: 0.5910, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.5417
+batch: 0, loss: 2.257
+Epoch: 1, train_loss: 1.4070, survival_loss: 53.2576, stage_loss: 48.6407, train_c_index: 0.4961, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.5417
+batch: 0, loss: 1.097
+Epoch: 2, train_loss: 1.1517, survival_loss: 42.0254, stage_loss: 52.8670, train_c_index: 0.6736, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.5417
+batch: 0, loss: 1.500
+Epoch: 3, train_loss: 1.3152, survival_loss: 49.0202, stage_loss: 51.8073, train_c_index: 0.4314, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.5417
+batch: 0, loss: 1.507
+Epoch: 4, train_loss: 1.2729, survival_loss: 46.8619, stage_loss: 54.9893, train_c_index: 0.4490, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.5417
+batch: 0, loss: 0.426
+Epoch: 5, train_loss: 1.3149, survival_loss: 49.9251, stage_loss: 44.1849, train_c_index: 0.5863, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.5833
+batch: 0, loss: 2.185
+Epoch: 6, train_loss: 1.2502, survival_loss: 46.5936, stage_loss: 49.2879, train_c_index: 0.5561, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.7083
+batch: 0, loss: 3.608
+Epoch: 7, train_loss: 1.5987, survival_loss: 61.1978, stage_loss: 49.5713, train_c_index: 0.4642, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7083
+batch: 0, loss: 0.486
+Epoch: 8, train_loss: 1.2235, survival_loss: 45.7159, stage_loss: 47.2650, train_c_index: 0.3660, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7083
+batch: 0, loss: 3.158
+Epoch: 9, train_loss: 1.3789, survival_loss: 52.1399, stage_loss: 48.1070, train_c_index: 0.4602, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7500
+batch: 0, loss: 0.892
+Epoch: 10, train_loss: 1.1968, survival_loss: 43.7410, stage_loss: 54.3851, train_c_index: 0.3858, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7500
+batch: 0, loss: 2.791
+Epoch: 11, train_loss: 1.1533, survival_loss: 42.0821, stage_loss: 52.9769, train_c_index: 0.4222, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.7917
+batch: 0, loss: 1.093
+Epoch: 12, train_loss: 1.2729, survival_loss: 47.8226, stage_loss: 46.9959, train_c_index: 0.4375, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7917
+batch: 0, loss: 1.244
+Epoch: 13, train_loss: 1.1954, survival_loss: 45.0522, stage_loss: 42.9550, train_c_index: 0.4795, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7917
+batch: 0, loss: 0.503
+Epoch: 14, train_loss: 1.1627, survival_loss: 43.6000, stage_loss: 43.5951, train_c_index: 0.5455, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7917
+batch: 0, loss: 1.542
+Epoch: 15, train_loss: 1.2257, survival_loss: 46.4859, stage_loss: 41.6074, train_c_index: 0.5473, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7917
+batch: 0, loss: 0.159
+Epoch: 16, train_loss: 1.2903, survival_loss: 49.7499, stage_loss: 37.0181, train_c_index: 0.5626, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7917
+batch: 0, loss: 0.161
+Epoch: 17, train_loss: 1.1563, survival_loss: 44.6086, stage_loss: 32.9765, train_c_index: 0.5403, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7917
+batch: 0, loss: 0.857
+Epoch: 18, train_loss: 1.1640, survival_loss: 43.5748, stage_loss: 44.2692, train_c_index: 0.5174, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7917
+batch: 0, loss: 0.922
+Epoch: 19, train_loss: 1.1074, survival_loss: 40.2613, stage_loss: 52.0895, train_c_index: 0.5963, stage_acc: 0.0000
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6303] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-F4-6809] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AF-5654] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6605] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AZ-6600] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-NH-A8F8] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-AA-A01P] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-G4-6302] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-A56B] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+✓ [TCGA-A6-4105] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase1
+Best Val c-index: 0.7917
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold1_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold1_km_plot.png
+Saving results...
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 2
+
+Training Fold 2!
+
+Init train/val splits... 
+Done!
+Training on 42 samples
+Validating on 11 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 18 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=18)，自动禁用通路编码器，改用直接拼接模式。
+
+==============================
+Model: snn
+总参数量 (Total):      0.1092 B
+可训练参数 (Trainable): 0.1092 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier                                | Params: 4,100
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 4,864
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier.0                                 | Params: 262,400
+Layer: stage_classifier.2                                 | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109245720
+Total number of trainable parameters: 109245720
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 1.482
+Epoch: 0, train_loss: 1.4350, survival_loss: 55.0432, stage_loss: 43.5521, train_c_index: 0.4687, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.2973
+batch: 0, loss: 0.252
+Epoch: 1, train_loss: 1.0732, survival_loss: 40.1593, stage_loss: 40.9599, train_c_index: 0.5070, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.2973
+batch: 0, loss: 0.170
+Epoch: 2, train_loss: 1.2469, survival_loss: 47.3813, stage_loss: 41.5834, train_c_index: 0.5498, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.3243
+batch: 0, loss: 0.967
+Epoch: 3, train_loss: 1.1368, survival_loss: 41.8869, stage_loss: 48.8175, train_c_index: 0.3666, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.3243
+batch: 0, loss: 2.018
+Epoch: 4, train_loss: 1.1534, survival_loss: 43.5222, stage_loss: 40.9941, train_c_index: 0.3660, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.3243
+batch: 0, loss: 1.057
+Epoch: 5, train_loss: 1.2993, survival_loss: 49.0537, stage_loss: 45.9884, train_c_index: 0.3919, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.5405
+batch: 0, loss: 0.497
+Epoch: 6, train_loss: 1.0145, survival_loss: 36.8705, stage_loss: 47.8057, train_c_index: 0.4140, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.5405
+batch: 0, loss: 1.127
+Epoch: 7, train_loss: 1.2555, survival_loss: 47.7778, stage_loss: 41.2881, train_c_index: 0.4617, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.5405
+batch: 0, loss: 0.180
+Epoch: 8, train_loss: 1.1860, survival_loss: 44.9062, stage_loss: 40.8911, train_c_index: 0.4463, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.5405
+batch: 0, loss: 1.175
+Epoch: 9, train_loss: 1.2312, survival_loss: 45.7405, stage_loss: 49.7577, train_c_index: 0.4832, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.5946
+batch: 0, loss: 3.536
+Epoch: 10, train_loss: 1.3345, survival_loss: 50.2029, stage_loss: 48.7064, train_c_index: 0.4355, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.5946
+batch: 0, loss: 0.826
+Epoch: 11, train_loss: 1.1953, survival_loss: 44.8105, stage_loss: 44.9275, train_c_index: 0.4861, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6486
+batch: 0, loss: 2.602
+Epoch: 12, train_loss: 1.0868, survival_loss: 40.8618, stage_loss: 39.8785, train_c_index: 0.4179, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7297
+batch: 0, loss: 1.815
+Epoch: 13, train_loss: 1.2800, survival_loss: 48.0479, stage_loss: 47.5966, train_c_index: 0.5278, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.7297
+batch: 0, loss: 2.213
+Epoch: 14, train_loss: 1.2771, survival_loss: 48.3433, stage_loss: 44.1097, train_c_index: 0.4592, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.7297
+batch: 0, loss: 0.253
+Epoch: 15, train_loss: 1.1759, survival_loss: 44.1827, stage_loss: 43.3690, train_c_index: 0.5599, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.7297
+batch: 0, loss: 1.890
+Epoch: 16, train_loss: 1.0588, survival_loss: 38.5155, stage_loss: 49.6094, train_c_index: 0.6145, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.7297
+batch: 0, loss: 0.167
+Epoch: 17, train_loss: 1.2755, survival_loss: 48.5878, stage_loss: 41.5373, train_c_index: 0.5392, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.7297
+batch: 0, loss: 0.553
+Epoch: 18, train_loss: 1.4000, survival_loss: 53.6154, stage_loss: 43.2003, train_c_index: 0.5366, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.7297
+batch: 0, loss: 0.270
+Epoch: 19, train_loss: 1.1535, survival_loss: 43.4721, stage_loss: 41.4645, train_c_index: 0.4218, stage_acc: 0.0000
+✓ [TCGA-A6-A567] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-QG-A5Z1] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-5M-AAT6] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AF-2690] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AH-6643] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-G5-6233] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-F4-6460] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-A6-A565] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-DC-6158] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4614] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+✓ [TCGA-AZ-4616] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase2
+Best Val c-index: 0.7297
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold2_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold2_km_plot.png
+Saving results...
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 3
+
+Training Fold 3!
+
+Init train/val splits... 
+Done!
+Training on 41 samples
+Validating on 11 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 18 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=18)，自动禁用通路编码器，改用直接拼接模式。
+
+==============================
+Model: snn
+总参数量 (Total):      0.1092 B
+可训练参数 (Trainable): 0.1092 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier                                | Params: 4,100
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 4,864
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier.0                                 | Params: 262,400
+Layer: stage_classifier.2                                 | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109245720
+Total number of trainable parameters: 109245720
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 1.166
+Epoch: 0, train_loss: 1.4466, survival_loss: 53.7051, stage_loss: 46.7120, train_c_index: 0.3626, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6250
+batch: 0, loss: 1.211
+Epoch: 1, train_loss: 1.3704, survival_loss: 51.2567, stage_loss: 41.0736, train_c_index: 0.3447, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6562
+batch: 0, loss: 0.882
+Epoch: 2, train_loss: 1.3084, survival_loss: 49.1163, stage_loss: 37.7324, train_c_index: 0.3378, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6875
+batch: 0, loss: 1.789
+Epoch: 3, train_loss: 1.2706, survival_loss: 47.8755, stage_loss: 35.1458, train_c_index: 0.4660, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 2.123
+Epoch: 4, train_loss: 1.2113, survival_loss: 45.4737, stage_loss: 34.9255, train_c_index: 0.5107, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 0.046
+Epoch: 5, train_loss: 1.2705, survival_loss: 47.3862, stage_loss: 39.2101, train_c_index: 0.3518, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 1.971
+Epoch: 6, train_loss: 1.2970, survival_loss: 48.8527, stage_loss: 36.0197, train_c_index: 0.5902, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 0.475
+Epoch: 7, train_loss: 1.3756, survival_loss: 50.7263, stage_loss: 47.2833, train_c_index: 0.4852, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 1.154
+Epoch: 8, train_loss: 1.4786, survival_loss: 55.5302, stage_loss: 42.4499, train_c_index: 0.3776, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 1.856
+Epoch: 9, train_loss: 1.4101, survival_loss: 53.9120, stage_loss: 32.5340, train_c_index: 0.4186, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 0.673
+Epoch: 10, train_loss: 1.1766, survival_loss: 43.1732, stage_loss: 42.2183, train_c_index: 0.2823, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 1.683
+Epoch: 11, train_loss: 1.3735, survival_loss: 52.2919, stage_loss: 33.5267, train_c_index: 0.3686, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 1.131
+Epoch: 12, train_loss: 1.1432, survival_loss: 42.4057, stage_loss: 37.2016, train_c_index: 0.4055, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 0.300
+Epoch: 13, train_loss: 1.0350, survival_loss: 38.6589, stage_loss: 31.4650, train_c_index: 0.3978, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 0.542
+Epoch: 14, train_loss: 1.1084, survival_loss: 40.3908, stage_loss: 42.1181, train_c_index: 0.4922, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 2.042
+Epoch: 15, train_loss: 1.1506, survival_loss: 41.7711, stage_loss: 45.0431, train_c_index: 0.6375, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 0.156
+Epoch: 16, train_loss: 1.1949, survival_loss: 44.1554, stage_loss: 40.2837, train_c_index: 0.5586, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 1.745
+Epoch: 17, train_loss: 1.1947, survival_loss: 44.8845, stage_loss: 34.1623, train_c_index: 0.4343, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 1.263
+Epoch: 18, train_loss: 1.1039, survival_loss: 41.0239, stage_loss: 35.3131, train_c_index: 0.5913, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+batch: 0, loss: 1.661
+Epoch: 19, train_loss: 1.0216, survival_loss: 37.9223, stage_loss: 33.0374, train_c_index: 0.4697, stage_acc: 0.0000
+✓ [TCGA-CM-5862] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F4-6570] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AH-6547] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AD-6899] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-2686] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-F5-6813] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-NH-A6GA] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-AZ-6607] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-A6-A566] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-G4-6298] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+✓ [TCGA-CK-5916] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase3
+Best Val c-index: 0.6875
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold3_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold3_km_plot.png
+Saving results...
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 4
+
+Training Fold 4!
+
+Init train/val splits... 
+Done!
+Training on 42 samples
+Validating on 10 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 18 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=18)，自动禁用通路编码器，改用直接拼接模式。
+
+==============================
+Model: snn
+总参数量 (Total):      0.1092 B
+可训练参数 (Trainable): 0.1092 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier                                | Params: 4,100
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 4,864
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier.0                                 | Params: 262,400
+Layer: stage_classifier.2                                 | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109245720
+Total number of trainable parameters: 109245720
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 1.841
+Epoch: 0, train_loss: 1.4491, survival_loss: 53.8222, stage_loss: 58.6533, train_c_index: 0.4402, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.6364
+batch: 0, loss: 0.329
+Epoch: 1, train_loss: 1.1415, survival_loss: 41.5346, stage_loss: 53.3946, train_c_index: 0.4422, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6364
+batch: 0, loss: 0.160
+Epoch: 2, train_loss: 1.1968, survival_loss: 45.7559, stage_loss: 37.5838, train_c_index: 0.5000, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6364
+batch: 0, loss: 2.651
+Epoch: 3, train_loss: 1.2468, survival_loss: 46.6835, stage_loss: 47.3338, train_c_index: 0.5961, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6364
+batch: 0, loss: 1.820
+Epoch: 4, train_loss: 1.5571, survival_loss: 60.2927, stage_loss: 42.5385, train_c_index: 0.3769, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6364
+batch: 0, loss: 1.351
+Epoch: 5, train_loss: 0.9307, survival_loss: 34.2197, stage_loss: 40.5902, train_c_index: 0.5076, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6591
+batch: 0, loss: 2.533
+Epoch: 6, train_loss: 1.2861, survival_loss: 48.0481, stage_loss: 49.7332, train_c_index: 0.4351, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6591
+batch: 0, loss: 2.674
+Epoch: 7, train_loss: 1.2166, survival_loss: 45.2790, stage_loss: 48.4940, train_c_index: 0.5467, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6591
+batch: 0, loss: 2.579
+Epoch: 8, train_loss: 1.3103, survival_loss: 48.8414, stage_loss: 51.6109, train_c_index: 0.4034, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6591
+batch: 0, loss: 0.127
+Epoch: 9, train_loss: 1.3635, survival_loss: 51.2558, stage_loss: 50.0876, train_c_index: 0.4297, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6591
+batch: 0, loss: 1.515
+Epoch: 10, train_loss: 1.1839, survival_loss: 44.5936, stage_loss: 42.7445, train_c_index: 0.3191, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.6818
+batch: 0, loss: 0.983
+Epoch: 11, train_loss: 1.2905, survival_loss: 49.5982, stage_loss: 38.3640, train_c_index: 0.4826, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.7045
+batch: 0, loss: 1.768
+Epoch: 12, train_loss: 1.3087, survival_loss: 49.4446, stage_loss: 46.0069, train_c_index: 0.4798, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7045
+batch: 0, loss: 1.539
+Epoch: 13, train_loss: 1.2567, survival_loss: 46.9036, stage_loss: 48.9692, train_c_index: 0.4541, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7045
+batch: 0, loss: 1.219
+Epoch: 14, train_loss: 1.0746, survival_loss: 40.3281, stage_loss: 40.0395, train_c_index: 0.5335, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7045
+batch: 0, loss: 1.080
+Epoch: 15, train_loss: 1.0213, survival_loss: 37.6427, stage_loss: 43.7816, train_c_index: 0.4919, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7045
+batch: 0, loss: 1.634
+Epoch: 16, train_loss: 1.3040, survival_loss: 50.6283, stage_loss: 34.5010, train_c_index: 0.6121, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7045
+batch: 0, loss: 1.317
+Epoch: 17, train_loss: 1.1868, survival_loss: 45.3888, stage_loss: 37.1319, train_c_index: 0.4928, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7045
+batch: 0, loss: 1.211
+Epoch: 18, train_loss: 1.3147, survival_loss: 49.5330, stage_loss: 47.3672, train_c_index: 0.5299, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7045
+batch: 0, loss: 1.346
+Epoch: 19, train_loss: 1.0997, survival_loss: 41.4395, stage_loss: 39.5698, train_c_index: 0.5210, stage_acc: 0.0000
+✓ [TCGA-CK-4951] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-5403] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F5-6863] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-G4-6294] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-4682] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AD-6889] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-AZ-6606] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-F4-6461] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5538] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+✓ [TCGA-D5-5537] 已保存可视化解释结果到: explanation_results/TCGA_COADREAD-Fold_dbiase4
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.7045
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold4_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/coadread_cfdemo/tcga_coadread__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_COADREAD-Fold4_km_plot.png
+Saving results...
+[DEBUG] Padding column val_stage_accuracy with None to match length 5
+
+==================================================
+FINAL RESULTS SUMMARY
+==================================================
+Fold 1: C-index = 0.7895
+Fold 2: C-index = 0.7917
+Fold 3: C-index = 0.7297
+Fold 4: C-index = 0.6875
+Fold 5: C-index = 0.7045
+Mean validation C-index: 0.7406 ± 0.0430
+Mean validation C-index IPCW: 0.7068 ± 0.0531
+Mean validation IBS: 0.1467 ± 0.0747
+Mean validation IAUC: nan ± nan
+Mean validation loss: 1.3341 ± 0.2639
+Mean validation stage accuracy: N/A (No valid predictions)
+==================================================
+finished!
+end script
+Script Time: 520.453494 seconds
+

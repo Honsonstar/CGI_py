@@ -1,0 +1,1198 @@
+cuda
+
+[DEBUG] ------------------------------------------------
+[DEBUG] 当前工作目录 (CWD): /root/autodl-tmp/newcfdemo/CFdemo_gene
+[DEBUG] 传入的 split_dir 参数: splits/5foldcv_ramdom/tcga_stad
+[DEBUG] 完整检查路径: /root/autodl-tmp/newcfdemo/CFdemo_gene/splits/5foldcv_ramdom/tcga_stad
+[DEBUG] 路径是否存在? : True
+[DEBUG] ------------------------------------------------
+
+Split dir: splits/5foldcv_ramdom/tcga_stad
+
+################# Settings ###################
+num_splits:  5
+k_start:  -1
+k_end:  -1
+task:  survival
+max_epochs:  20
+results_dir:  ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12
+lr:  0.0005
+experiment:  tcga_stad
+reg:  0.0001
+bag_loss:  nll_surv
+seed:  1
+weighted_sample:  True
+opt:  radam
+num_patches:  4000
+dropout:  0.25
+type_of_path:  custom
+split_dir:  splits/5foldcv_ramdom/tcga_stad
+enable_multitask:  True
+multitask_weight:  0.12
+
+🧹 [Dataset] Dropping non-feature columns: ['OS']
+Loaded clinical data from: ./datasets_csv/clinical_data/tcga_stad_clinical.csv
+Clinical data shape: (277, 18)
+Clinical data index (case_id) samples: ['TCGA-D7-8573', 'TCGA-D7-8573', 'TCGA-HU-8249', 'TCGA-BR-6801', 'TCGA-D7-A6F0']
+Available stages: stage
+III    120
+IV      76
+II      71
+I       10
+Name: count, dtype: int64
+Valid stage mapping (excluding '0'): {'I': 0, 'II': 1, 'III': 2, 'IV': 3}
+Number of valid stage classes: 4
+Valid stage distribution:
+  III: 120
+  IV: 76
+  II: 71
+  I: 10
+Using direct case_id matching for merging
+[DEBUG] -------------------------------------
+[DEBUG] 现有列名: ['case_id', 'patient_filename', 'text_report', 'stage', 'grade', 'subtype', 'Unnamed: 0', 'slide_id', 'age', 'site', 'survival_months', 'survival_months_dss', 'survival_months_pfi', 'censorship', 'censorship_dss', 'censorship_pfi', 'is_female', 'oncotree_code', 'train']
+[DEBUG] 想找的列: |censorship_dss|
+[DEBUG] -------------------------------------
+label column: survival_months_dss
+number of cases 253
+number of classes: 8
+multitask learning enabled
+number of stage classes: 4
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 0
+
+Training Fold 0!
+
+Init train/val splits... 
+Done!
+Training on 82 samples
+Validating on 22 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 50 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=50)，自动禁用通路编码器，改用直接拼接模式。
+
+[DEBUG] SNNOmics 初始化状态: only_omic = True
+[DEBUG] -> 正在构建 [纯基因] 分类器 (Input Dim: 256)
+
+==============================
+Model: snn
+总参数量 (Total):      0.1090 B
+可训练参数 (Trainable): 0.1090 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier.0                              | Params: 32,896
+Layer: survival_classifier.2                              | Params: 516
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 13,056
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier                                   | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109020824
+Total number of trainable parameters: 109020824
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 2.308
+Epoch: 0, train_loss: 1.8184, survival_loss: 133.2605, stage_loss: 132.0629, train_c_index: 0.4453, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.4375
+batch: 0, loss: 0.561
+Epoch: 1, train_loss: 1.5953, survival_loss: 114.1958, stage_loss: 138.4733, train_c_index: 0.4374, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.4861
+batch: 0, loss: 0.699
+Epoch: 2, train_loss: 1.6998, survival_loss: 125.6029, stage_loss: 114.8595, train_c_index: 0.4610, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.5694
+batch: 0, loss: 3.108
+Epoch: 3, train_loss: 1.4689, survival_loss: 104.6578, stage_loss: 131.6305, train_c_index: 0.5038, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.5972
+batch: 0, loss: 0.925
+Epoch: 4, train_loss: 1.4677, survival_loss: 103.5121, stage_loss: 140.3004, train_c_index: 0.5893, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 0.459
+Epoch: 5, train_loss: 1.3801, survival_loss: 99.4539, stage_loss: 114.2750, train_c_index: 0.4895, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 0.887
+Epoch: 6, train_loss: 1.2646, survival_loss: 89.4942, stage_loss: 118.3873, train_c_index: 0.4885, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 1.903
+Epoch: 7, train_loss: 1.2022, survival_loss: 85.1936, stage_loss: 111.5903, train_c_index: 0.5525, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 1.237
+Epoch: 8, train_loss: 1.1714, survival_loss: 84.4414, stage_loss: 96.7823, train_c_index: 0.5462, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 1.113
+Epoch: 9, train_loss: 1.1634, survival_loss: 83.1981, stage_loss: 101.7039, train_c_index: 0.5647, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 2.761
+Epoch: 10, train_loss: 1.3480, survival_loss: 98.1211, stage_loss: 103.4666, train_c_index: 0.4570, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 0.791
+Epoch: 11, train_loss: 1.1984, survival_loss: 88.0197, stage_loss: 85.3847, train_c_index: 0.5657, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 0.434
+Epoch: 12, train_loss: 1.0279, survival_loss: 72.7731, stage_loss: 95.9586, train_c_index: 0.5266, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 2.336
+Epoch: 13, train_loss: 1.0638, survival_loss: 75.1909, stage_loss: 100.3673, train_c_index: 0.5034, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 0.407
+Epoch: 14, train_loss: 0.9622, survival_loss: 67.5610, stage_loss: 94.5027, train_c_index: 0.5155, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 0.473
+Epoch: 15, train_loss: 1.1527, survival_loss: 81.5281, stage_loss: 108.2495, train_c_index: 0.6380, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 1.167
+Epoch: 16, train_loss: 1.1808, survival_loss: 84.4640, stage_loss: 103.0208, train_c_index: 0.6312, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 0.164
+Epoch: 17, train_loss: 1.1340, survival_loss: 80.8723, stage_loss: 100.9718, train_c_index: 0.6252, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 1.478
+Epoch: 18, train_loss: 1.0383, survival_loss: 73.7130, stage_loss: 95.2101, train_c_index: 0.5885, stage_acc: 0.0000
+Best Val c-index: 0.5972
+batch: 0, loss: 1.179
+Epoch: 19, train_loss: 1.0889, survival_loss: 76.0842, stage_loss: 110.0590, train_c_index: 0.6200, stage_acc: 0.0000
+Best Val c-index: 0.5972
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold0_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold0_km_plot.png
+Saving results...
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 1
+
+Training Fold 1!
+
+Init train/val splits... 
+Done!
+Training on 82 samples
+Validating on 21 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 50 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=50)，自动禁用通路编码器，改用直接拼接模式。
+
+[DEBUG] SNNOmics 初始化状态: only_omic = True
+[DEBUG] -> 正在构建 [纯基因] 分类器 (Input Dim: 256)
+
+==============================
+Model: snn
+总参数量 (Total):      0.1090 B
+可训练参数 (Trainable): 0.1090 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier.0                              | Params: 32,896
+Layer: survival_classifier.2                              | Params: 516
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 13,056
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier                                   | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109020824
+Total number of trainable parameters: 109020824
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 1.144
+Epoch: 0, train_loss: 1.5637, survival_loss: 112.5122, stage_loss: 130.9600, train_c_index: 0.4956, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.5248
+batch: 0, loss: 1.419
+Epoch: 1, train_loss: 1.5583, survival_loss: 112.2743, stage_loss: 129.2234, train_c_index: 0.5209, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.5545
+batch: 0, loss: 2.883
+Epoch: 2, train_loss: 1.7039, survival_loss: 123.1554, stage_loss: 138.0308, train_c_index: 0.3994, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.5842
+batch: 0, loss: 0.470
+Epoch: 3, train_loss: 1.4985, survival_loss: 107.3129, stage_loss: 129.6942, train_c_index: 0.4613, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6040
+batch: 0, loss: 0.577
+Epoch: 4, train_loss: 1.5431, survival_loss: 110.6366, stage_loss: 132.4924, train_c_index: 0.4413, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6634
+batch: 0, loss: 0.562
+Epoch: 5, train_loss: 1.3650, survival_loss: 97.0584, stage_loss: 123.9238, train_c_index: 0.4862, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 0.958
+Epoch: 6, train_loss: 1.2863, survival_loss: 90.6057, stage_loss: 123.9070, train_c_index: 0.5591, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 2.020
+Epoch: 7, train_loss: 1.1784, survival_loss: 84.6155, stage_loss: 100.0909, train_c_index: 0.4856, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 1.045
+Epoch: 8, train_loss: 1.1714, survival_loss: 82.8053, stage_loss: 110.4244, train_c_index: 0.5998, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 1.194
+Epoch: 9, train_loss: 1.1757, survival_loss: 84.3232, stage_loss: 100.7095, train_c_index: 0.5333, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 1.901
+Epoch: 10, train_loss: 1.2993, survival_loss: 94.3571, stage_loss: 101.5630, train_c_index: 0.4979, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 0.892
+Epoch: 11, train_loss: 1.1801, survival_loss: 85.0172, stage_loss: 97.9028, train_c_index: 0.5679, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 0.210
+Epoch: 12, train_loss: 1.2716, survival_loss: 93.2667, stage_loss: 91.7323, train_c_index: 0.5393, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 0.152
+Epoch: 13, train_loss: 1.1639, survival_loss: 85.7700, stage_loss: 80.5543, train_c_index: 0.5769, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 1.729
+Epoch: 14, train_loss: 1.1045, survival_loss: 79.6448, stage_loss: 91.0672, train_c_index: 0.5138, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 2.780
+Epoch: 15, train_loss: 1.0914, survival_loss: 79.4032, stage_loss: 84.0775, train_c_index: 0.5608, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 2.024
+Epoch: 16, train_loss: 1.2750, survival_loss: 94.3493, stage_loss: 85.0137, train_c_index: 0.5227, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 1.681
+Epoch: 17, train_loss: 1.1343, survival_loss: 82.6189, stage_loss: 86.6144, train_c_index: 0.5986, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 1.410
+Epoch: 18, train_loss: 1.1221, survival_loss: 82.9192, stage_loss: 75.7529, train_c_index: 0.4499, stage_acc: 0.0000
+Best Val c-index: 0.6634
+batch: 0, loss: 0.622
+Epoch: 19, train_loss: 1.2130, survival_loss: 88.0663, stage_loss: 95.0309, train_c_index: 0.5009, stage_acc: 0.0000
+Best Val c-index: 0.6634
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold1_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold1_km_plot.png
+Saving results...
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 2
+
+Training Fold 2!
+
+Init train/val splits... 
+Done!
+Training on 81 samples
+Validating on 21 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 50 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=50)，自动禁用通路编码器，改用直接拼接模式。
+
+[DEBUG] SNNOmics 初始化状态: only_omic = True
+[DEBUG] -> 正在构建 [纯基因] 分类器 (Input Dim: 256)
+
+==============================
+Model: snn
+总参数量 (Total):      0.1090 B
+可训练参数 (Trainable): 0.1090 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier.0                              | Params: 32,896
+Layer: survival_classifier.2                              | Params: 516
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 13,056
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier                                   | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109020824
+Total number of trainable parameters: 109020824
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 3.011
+Epoch: 0, train_loss: 1.5921, survival_loss: 114.8260, stage_loss: 117.7886, train_c_index: 0.5152, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.5548
+batch: 0, loss: 1.211
+Epoch: 1, train_loss: 1.5043, survival_loss: 106.9638, stage_loss: 124.0456, train_c_index: 0.6486, stage_acc: 0.0000
+Best Val c-index: 0.5548
+batch: 0, loss: 0.950
+Epoch: 2, train_loss: 1.3850, survival_loss: 96.1189, stage_loss: 133.8988, train_c_index: 0.6313, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6164
+batch: 0, loss: 0.821
+Epoch: 3, train_loss: 1.4417, survival_loss: 102.3251, stage_loss: 120.4466, train_c_index: 0.5872, stage_acc: 0.0000
+Best Val c-index: 0.6164
+batch: 0, loss: 2.328
+Epoch: 4, train_loss: 1.5231, survival_loss: 109.0886, stage_loss: 118.9909, train_c_index: 0.5079, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.6233
+batch: 0, loss: 0.562
+Epoch: 5, train_loss: 1.2687, survival_loss: 89.1730, stage_loss: 113.2534, train_c_index: 0.4957, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.6438
+batch: 0, loss: 0.867
+Epoch: 6, train_loss: 1.3838, survival_loss: 100.1918, stage_loss: 99.1093, train_c_index: 0.4213, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 1.261
+Epoch: 7, train_loss: 1.2504, survival_loss: 88.8326, stage_loss: 103.7740, train_c_index: 0.5848, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 1.750
+Epoch: 8, train_loss: 1.2373, survival_loss: 88.7398, stage_loss: 95.6763, train_c_index: 0.4346, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 2.786
+Epoch: 9, train_loss: 1.1640, survival_loss: 82.0522, stage_loss: 101.8998, train_c_index: 0.5632, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 2.578
+Epoch: 10, train_loss: 1.1466, survival_loss: 81.2466, stage_loss: 96.9291, train_c_index: 0.6097, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 0.558
+Epoch: 11, train_loss: 1.2222, survival_loss: 87.7070, stage_loss: 94.0744, train_c_index: 0.5874, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 0.490
+Epoch: 12, train_loss: 1.1284, survival_loss: 79.1944, stage_loss: 101.6888, train_c_index: 0.4432, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 0.396
+Epoch: 13, train_loss: 1.1505, survival_loss: 81.8487, stage_loss: 94.5006, train_c_index: 0.5009, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 0.528
+Epoch: 14, train_loss: 1.0044, survival_loss: 69.5779, stage_loss: 98.1687, train_c_index: 0.5575, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 1.261
+Epoch: 15, train_loss: 1.2645, survival_loss: 90.3465, stage_loss: 100.6423, train_c_index: 0.5336, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 1.584
+Epoch: 16, train_loss: 1.1950, survival_loss: 85.2061, stage_loss: 96.5444, train_c_index: 0.4613, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 0.399
+Epoch: 17, train_loss: 1.2277, survival_loss: 88.3671, stage_loss: 92.3306, train_c_index: 0.5793, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 0.795
+Epoch: 18, train_loss: 1.2812, survival_loss: 91.5957, stage_loss: 101.5152, train_c_index: 0.4983, stage_acc: 0.0000
+Best Val c-index: 0.6438
+batch: 0, loss: 0.496
+Epoch: 19, train_loss: 1.2076, survival_loss: 87.1870, stage_loss: 88.5467, train_c_index: 0.5303, stage_acc: 0.0000
+Best Val c-index: 0.6438
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold2_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold2_km_plot.png
+Saving results...
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 3
+
+Training Fold 3!
+
+Init train/val splits... 
+Done!
+Training on 81 samples
+Validating on 20 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 50 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=50)，自动禁用通路编码器，改用直接拼接模式。
+
+[DEBUG] SNNOmics 初始化状态: only_omic = True
+[DEBUG] -> 正在构建 [纯基因] 分类器 (Input Dim: 256)
+
+==============================
+Model: snn
+总参数量 (Total):      0.1090 B
+可训练参数 (Trainable): 0.1090 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier.0                              | Params: 32,896
+Layer: survival_classifier.2                              | Params: 516
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 13,056
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier                                   | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109020824
+Total number of trainable parameters: 109020824
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 0.936
+Epoch: 0, train_loss: 1.3964, survival_loss: 97.7185, stage_loss: 128.2399, train_c_index: 0.5687, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+An error occured while computing iauc
+Best Val c-index: 0.5659
+batch: 0, loss: 0.644
+Epoch: 1, train_loss: 1.6612, survival_loss: 118.4550, stage_loss: 134.1724, train_c_index: 0.5197, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.5736
+batch: 0, loss: 0.677
+Epoch: 2, train_loss: 1.4441, survival_loss: 99.7476, stage_loss: 143.5426, train_c_index: 0.5437, stage_acc: 0.0000
+Best Val c-index: 0.5736
+batch: 0, loss: 0.820
+Epoch: 3, train_loss: 1.2230, survival_loss: 84.3622, stage_loss: 122.5383, train_c_index: 0.5634, stage_acc: 0.0000
+Best Val c-index: 0.5736
+batch: 0, loss: 2.694
+Epoch: 4, train_loss: 1.3749, survival_loss: 95.8969, stage_loss: 128.8836, train_c_index: 0.5340, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.5814
+batch: 0, loss: 0.303
+Epoch: 5, train_loss: 1.2488, survival_loss: 86.7473, stage_loss: 120.0332, train_c_index: 0.4916, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 2.162
+Epoch: 6, train_loss: 1.1860, survival_loss: 81.2700, stage_loss: 123.3037, train_c_index: 0.6205, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 1.756
+Epoch: 7, train_loss: 1.0781, survival_loss: 75.5714, stage_loss: 97.9331, train_c_index: 0.6023, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 0.414
+Epoch: 8, train_loss: 1.1833, survival_loss: 82.6465, stage_loss: 109.9798, train_c_index: 0.5243, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 1.639
+Epoch: 9, train_loss: 1.2218, survival_loss: 85.4470, stage_loss: 112.6689, train_c_index: 0.4662, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 0.247
+Epoch: 10, train_loss: 1.1395, survival_loss: 81.2353, stage_loss: 92.2127, train_c_index: 0.5878, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 1.545
+Epoch: 11, train_loss: 1.0584, survival_loss: 74.6484, stage_loss: 92.3698, train_c_index: 0.5646, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 2.045
+Epoch: 12, train_loss: 1.2245, survival_loss: 86.6765, stage_loss: 104.2363, train_c_index: 0.5537, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 1.971
+Epoch: 13, train_loss: 1.1659, survival_loss: 81.5738, stage_loss: 107.1987, train_c_index: 0.4934, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 3.546
+Epoch: 14, train_loss: 1.1184, survival_loss: 78.5520, stage_loss: 100.3523, train_c_index: 0.5788, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 0.143
+Epoch: 15, train_loss: 1.1246, survival_loss: 79.8823, stage_loss: 93.4101, train_c_index: 0.5359, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 0.428
+Epoch: 16, train_loss: 1.1891, survival_loss: 85.1252, stage_loss: 93.2682, train_c_index: 0.5408, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 1.906
+Epoch: 17, train_loss: 1.0165, survival_loss: 71.5964, stage_loss: 89.5011, train_c_index: 0.6029, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 0.946
+Epoch: 18, train_loss: 1.0527, survival_loss: 74.1735, stage_loss: 92.4817, train_c_index: 0.5823, stage_acc: 0.0000
+Best Val c-index: 0.5814
+batch: 0, loss: 0.586
+Epoch: 19, train_loss: 1.0524, survival_loss: 74.6187, stage_loss: 88.5799, train_c_index: 0.5849, stage_acc: 0.0000
+Best Val c-index: 0.5814
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold3_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold3_km_plot.png
+Saving results...
+Defining datasets...
+Using split_key='test' for validation set.
+Created train and val datasets for fold 4
+
+Training Fold 4!
+
+Init train/val splits... 
+Done!
+Training on 82 samples
+Validating on 21 samples
+
+Init loss function... Done!
+
+Init Model...   [Auto-Detect] Detected 50 features from custom file.
+🔥 [Model Info] 检测到筛选后的特征 (Dim=50)，自动禁用通路编码器，改用直接拼接模式。
+
+[DEBUG] SNNOmics 初始化状态: only_omic = True
+[DEBUG] -> 正在构建 [纯基因] 分类器 (Input Dim: 256)
+
+==============================
+Model: snn
+总参数量 (Total):      0.1090 B
+可训练参数 (Trainable): 0.1090 B
+==============================
+
+
+Detailed layer-by-layer parameters:
+Layer:                                                    | Params: 3
+Layer: survival_classifier.0                              | Params: 32,896
+Layer: survival_classifier.2                              | Params: 516
+Layer: clinical_bert_model.embeddings.word_embeddings     | Params: 22,268,928
+Layer: clinical_bert_model.embeddings.position_embeddings | Params: 393,216
+Layer: clinical_bert_model.embeddings.token_type_embeddings | Params: 1,536
+Layer: clinical_bert_model.embeddings.LayerNorm           | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.0.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.0.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.0.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.0.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.1.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.1.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.1.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.1.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.2.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.2.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.2.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.2.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.3.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.3.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.3.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.3.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.4.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.4.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.4.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.4.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.5.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.5.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.5.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.5.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.6.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.6.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.6.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.6.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.7.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.7.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.7.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.7.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.8.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.8.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.8.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.8.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.9.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.9.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.9.output.dense   | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.9.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.10.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.10.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.10.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.10.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.attention.self.query | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.key | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.self.value | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.dense | Params: 590,592
+Layer: clinical_bert_model.encoder.layer.11.attention.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.encoder.layer.11.intermediate.dense | Params: 2,362,368
+Layer: clinical_bert_model.encoder.layer.11.output.dense  | Params: 2,360,064
+Layer: clinical_bert_model.encoder.layer.11.output.LayerNorm | Params: 1,536
+Layer: clinical_bert_model.pooler.dense                   | Params: 590,592
+Layer: fc_omic.0.0                                        | Params: 13,056
+Layer: fc_omic.1.0                                        | Params: 65,792
+Layer: text_classifier                                    | Params: 1,028
+Layer: gene_classifier                                    | Params: 1,028
+Layer: stage_classifier                                   | Params: 1,028
+Layer: stage_classifier_text                              | Params: 3,076
+Layer: lin_weight                                         | Params: 769
+Layer: text_projection                                    | Params: 196,864
+Layer: query_projection                                   | Params: 131,328
+Layer: cross_attention                                    | Params: 197,376
+Layer: cross_attention.out_proj                           | Params: 65,792
+Done!
+Total number of parameters: 109020824
+Total number of trainable parameters: 109020824
+
+Init optimizer ... 
+Init Loaders... Done!
+batch: 0, loss: 0.862
+Epoch: 0, train_loss: 1.6207, survival_loss: 116.2996, stage_loss: 138.2916, train_c_index: 0.5490, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.4510
+batch: 0, loss: 0.815
+Epoch: 1, train_loss: 1.7049, survival_loss: 124.8525, stage_loss: 124.5697, train_c_index: 0.5026, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.4837
+batch: 0, loss: 1.703
+Epoch: 2, train_loss: 1.4268, survival_loss: 102.5164, stage_loss: 120.6967, train_c_index: 0.6319, stage_acc: 0.0000
+Best Val c-index: 0.4837
+batch: 0, loss: 1.029
+Epoch: 3, train_loss: 1.3559, survival_loss: 96.0690, stage_loss: 125.9377, train_c_index: 0.4973, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.5817
+batch: 0, loss: 1.090
+Epoch: 4, train_loss: 1.5476, survival_loss: 112.2150, stage_loss: 122.3674, train_c_index: 0.4181, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.6536
+batch: 0, loss: 0.575
+Epoch: 5, train_loss: 1.4368, survival_loss: 103.5693, stage_loss: 118.7123, train_c_index: 0.5473, stage_acc: 0.0000
+Best Val c-index: 0.6536
+batch: 0, loss: 0.500
+Epoch: 6, train_loss: 1.2748, survival_loss: 90.8273, stage_loss: 114.2079, train_c_index: 0.5125, stage_acc: 0.0000
+Best Val c-index: 0.6536
+batch: 0, loss: 0.327
+Epoch: 7, train_loss: 1.1929, survival_loss: 84.9747, stage_loss: 107.0421, train_c_index: 0.4984, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.6863
+batch: 0, loss: 0.297
+Epoch: 8, train_loss: 1.1602, survival_loss: 82.4018, stage_loss: 106.1334, train_c_index: 0.4736, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.7320
+batch: 0, loss: 1.501
+Epoch: 9, train_loss: 1.3247, survival_loss: 95.8645, stage_loss: 106.3396, train_c_index: 0.4611, stage_acc: 0.0000
+Best Val c-index: 0.7320
+batch: 0, loss: 0.552
+Epoch: 10, train_loss: 1.2014, survival_loss: 85.1953, stage_loss: 111.0293, train_c_index: 0.5957, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+An error occured while computing BS
+An error occured while computing IBS
+Best Val c-index: 0.7516
+batch: 0, loss: 1.669
+Epoch: 11, train_loss: 1.1457, survival_loss: 80.9919, stage_loss: 107.9813, train_c_index: 0.4762, stage_acc: 0.0000
+Best Val c-index: 0.7516
+batch: 0, loss: 2.608
+Epoch: 12, train_loss: 1.1723, survival_loss: 84.4099, stage_loss: 97.6365, train_c_index: 0.5713, stage_acc: 0.0000
+  🔄 同时获取训练集结果...
+Best Val c-index: 0.7582
+batch: 0, loss: 0.404
+Epoch: 13, train_loss: 1.2185, survival_loss: 87.2824, stage_loss: 105.3197, train_c_index: 0.5417, stage_acc: 0.0000
+Best Val c-index: 0.7582
+batch: 0, loss: 2.579
+Epoch: 14, train_loss: 1.2740, survival_loss: 92.3721, stage_loss: 100.8242, train_c_index: 0.4462, stage_acc: 0.0000
+Best Val c-index: 0.7582
+batch: 0, loss: 0.172
+Epoch: 15, train_loss: 1.2375, survival_loss: 90.3233, stage_loss: 92.9083, train_c_index: 0.5469, stage_acc: 0.0000
+Best Val c-index: 0.7582
+batch: 0, loss: 1.692
+Epoch: 16, train_loss: 1.2051, survival_loss: 86.9670, stage_loss: 98.7683, train_c_index: 0.5506, stage_acc: 0.0000
+Best Val c-index: 0.7582
+batch: 0, loss: 0.389
+Epoch: 17, train_loss: 1.2115, survival_loss: 87.0331, stage_loss: 102.6103, train_c_index: 0.5144, stage_acc: 0.0000
+Best Val c-index: 0.7582
+batch: 0, loss: 1.768
+Epoch: 18, train_loss: 1.1104, survival_loss: 80.4696, stage_loss: 88.1778, train_c_index: 0.6706, stage_acc: 0.0000
+Best Val c-index: 0.7582
+batch: 0, loss: 0.976
+Epoch: 19, train_loss: 1.1906, survival_loss: 86.0743, stage_loss: 96.2618, train_c_index: 0.4901, stage_acc: 0.0000
+Best Val c-index: 0.7582
+🎨 Generating Kaplan-Meier plot for the full cohort...
+📁 KM plot data saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold4_km_plot_data.csv
+🖼️ KM plot image saved to: ./results/results/stad_cfdemo_gene/tcga_stad__nll_surv_a0.5_lr5e-04_l2Weight_0.0001_5foldcv_b1_survival_months_dss_dim1_768_patches_4000_wsiDim_1_epochs_20_fusion_None_modality_snn_pathT_custom_multitask_0.12/TCGA_STAD-Fold4_km_plot.png
+Saving results...
+[DEBUG] Padding column val_stage_accuracy with None to match length 5
+
+==================================================
+FINAL RESULTS SUMMARY
+==================================================
+Fold 1: C-index = 0.5972
+Fold 2: C-index = 0.6634
+Fold 3: C-index = 0.6438
+Fold 4: C-index = 0.5814
+Fold 5: C-index = 0.7582
+Mean validation C-index: 0.6488 ± 0.0623
+Mean validation C-index IPCW: 0.5840 ± 0.0615
+Mean validation IBS: 0.1626 ± 0.0192
+Mean validation IAUC: 0.7219 ± 0.1510
+Mean validation loss: 1.6065 ± 0.1058
+Mean validation stage accuracy: N/A (No valid predictions)
+==================================================
+finished!
+end script
+Script Time: 319.104214 seconds
+
