@@ -17,7 +17,7 @@ class NestedCVFeatureSelector:
         Args:
             study: 癌症类型 (如 'blca', 'brca')
             data_root_dir: CPCG原始数据目录
-            threshold: 筛选基因数量
+            threshold: 筛选基因数量阈值，如果实际筛选的基因少于这个数，则使用实际数量
         """
         self.study = study
         self.data_root_dir = data_root_dir
@@ -85,6 +85,11 @@ class NestedCVFeatureSelector:
         
     def _run_cpog_stage1(self, clinical_data, exp_data):
         """运行CPCG Stage1筛选基因"""
+        import sys
+        import os
+        # Add the CPCG directory to path
+        cpog_dir = os.path.dirname(os.path.abspath(__file__))
+        sys.path.insert(0, cpog_dir)
         from Stage1_parametric_model.screen import screen_step_1
         
         # 预处理数据
