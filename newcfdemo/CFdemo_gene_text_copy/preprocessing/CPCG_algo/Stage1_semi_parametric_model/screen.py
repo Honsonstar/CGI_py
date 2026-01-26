@@ -64,7 +64,7 @@ def screen_step_2(clinical_final, exp_data, h_type, threshold = 100):
     ed.index = ed['gene_name'].values
 
     result = pd.DataFrame(); result.index = cd.index
-    result = pd.merge(result, cd[[h_type, 'OS']], how='left', left_index=True, right_index=True)
+    result = pd.merge(result, cd[['Censor', h_type, 'OS']], how='left', left_index=True, right_index=True)
     result = pd.merge(result, ed.loc[corr_index, :].drop(columns = 'gene_name').T, how='left', left_index=True, right_index=True)
 
     return result
