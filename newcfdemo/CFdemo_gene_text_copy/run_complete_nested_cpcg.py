@@ -206,14 +206,24 @@ def run_stage2(study, fold, para_dir, semi_dir):
     os.makedirs(f'preprocessing/CPCG_algo/raw_data/para_result', exist_ok=True)
     os.makedirs(f'preprocessing/CPCG_algo/raw_data/semi_result', exist_ok=True)
 
-    # 复制数据到标准位置
-    if os.path.exists(f'{para_dir}/result.csv'):
-        os.makedirs(para_link, exist_ok=True)
-        shutil.copy2(f'{para_dir}/result.csv', f'{para_link}/result.csv')
+    # 复制数据到标准位置 - 检查多种可能的文件名
+    para_result_files = ['result.csv', 'stage1_parametric_result.csv']
+    for fname in para_result_files:
+        src = f'{para_dir}/{fname}'
+        if os.path.exists(src):
+            os.makedirs(para_link, exist_ok=True)
+            shutil.copy2(src, f'{para_link}/result.csv')
+            print(f"   已复制Parametric结果: {fname} -> result.csv")
+            break
 
-    if os.path.exists(f'{semi_dir}/result.csv'):
-        os.makedirs(semi_link, exist_ok=True)
-        shutil.copy2(f'{semi_dir}/result.csv', f'{semi_link}/result.csv')
+    semi_result_files = ['result.csv', 'stage1_semi_parametric_result.csv']
+    for fname in semi_result_files:
+        src = f'{semi_dir}/{fname}'
+        if os.path.exists(src):
+            os.makedirs(semi_link, exist_ok=True)
+            shutil.copy2(src, f'{semi_link}/result.csv')
+            print(f"   已复制Semi-Parametric结果: {fname} -> result.csv")
+            break
 
     # 运行Stage2
     stage2_dir = 'preprocessing/CPCG_algo/Stage2'
@@ -222,7 +232,7 @@ def run_stage2(study, fold, para_dir, semi_dir):
         os.chdir(stage2_dir)
         result = subprocess.run([
             'python', 'main.py'
-        ], capture_output=True, text=True, timeout=300)
+        ], capture_output=True, text=True, timeout=1800)
 
         if result.returncode == 0:
             print(f"   ✅ Stage2完成")
