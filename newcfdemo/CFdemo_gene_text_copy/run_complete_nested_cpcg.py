@@ -146,13 +146,16 @@ def run_stage1_semi_parametric(study, fold, fold_work_dir):
     print(f"   运行半参数化模型...")
 
     try:
+        # 需要创建clinical_final.CSV - 在切换目录前读取和准备文件
+        clinical_final = pd.read_csv(clinical_file)
+        exp_file_abs = os.path.abspath(exp_file)  # 获取绝对路径
+
         # 切换到semi-parametric目录
         os.chdir(stage1_dir)
 
-        # 需要创建clinical_final.CSV
-        clinical_final = pd.read_csv(clinical_file)
+        # 写入文件（使用绝对路径确保正确）
         clinical_final.to_csv('semi_input_clinical.CSV', index=False)
-        shutil.copy2(exp_file, 'semi_input_data.csv')
+        shutil.copy2(exp_file_abs, 'semi_input_data.csv')
 
         # 运行半参数化筛选
         result = subprocess.run([
