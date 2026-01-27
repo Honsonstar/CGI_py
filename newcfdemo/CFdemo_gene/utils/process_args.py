@@ -63,6 +63,8 @@ def _process_args():
     parser.add_argument('--lr_scheduler', type=str, default='cosine')
     parser.add_argument('--warmup_epochs', type=int, default=10)
 
+
+
     #---> model related
     parser.add_argument('--fusion', type=str, default=None)
     parser.add_argument('--modality', type=str, default="wsi")
