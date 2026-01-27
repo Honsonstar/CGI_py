@@ -57,11 +57,18 @@ def main(args):
 
     # 保存 CSV 汇总
     df = pd.DataFrame({'folds': folds, 'val_cindex': results_store['cindex']})
-    # 自动补充其他列...
-    save_name = 'summary_partial_{}_{}.csv'.format(folds[0], folds[-1]) if len(folds) != args.k else 'summary.csv'
-    df.to_csv(os.path.join(args.results_dir, save_name))
+    
+    # 自动补充其他列 (防止长度不一致报错)
+    max_len = len(folds)
+    for k, v in results_store.items():
+        if k != 'cindex': # folds 和 cindex 已添加
+            if len(v) < max_len: v.extend([None]*(max_len-len(v)))
+            df[f'val_{k}'] = v
 
-    # --- 打印当前运行的 Fold 结果 (修复了 Fold 1 显示问题) ---
+    save_name = 'summary_partial_{}_{}.csv'.format(folds[0], folds[-1]) if len(folds) != args.k else 'summary.csv'
+    df.to_csv(os.path.join(args.results_dir, save_name), index=False)
+
+    # --- 打印当前运行的 Fold 结果 ---
     print("\n" + "="*50)
     print("CURRENT RUN SUMMARY")
     print("="*50)
@@ -72,9 +79,22 @@ def main(args):
 if __name__ == "__main__":
     args = _process_args()
     args = _prepare_for_experiment(args)
+    
+    # 【关键修复】添加 print_info=True
     args.dataset_factory = SurvivalDatasetFactory(
-        study=args.study, label_file=args.label_file, omics_dir=args.omics_dir, seed=args.seed,
-        n_bins=args.n_classes, label_col=args.label_col, eps=1e-6, num_patches=args.num_patches,
-        is_mcat = "coattn" in args.modality, is_survpath = args.modality == "survpath",
-        type_of_pathway=args.type_of_path, enable_multitask=args.enable_multitask)
+        study=args.study, 
+        label_file=args.label_file, 
+        omics_dir=args.omics_dir, 
+        seed=args.seed,
+        print_info=True,  # <--- 补回这个参数
+        n_bins=args.n_classes, 
+        label_col=args.label_col, 
+        eps=1e-6, 
+        num_patches=args.num_patches,
+        is_mcat = "coattn" in args.modality, 
+        is_survpath = args.modality == "survpath",
+        type_of_pathway=args.type_of_path, 
+        enable_multitask=args.enable_multitask
+    )
+    
     main(args)
