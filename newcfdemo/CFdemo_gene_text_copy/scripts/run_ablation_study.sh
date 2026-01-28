@@ -13,12 +13,29 @@ if [ -z "$1" ]; then
 fi
 
 STUDY=$1
+TODAY=$(date +%Y-%m-%d)
+
+# 【新增】创建日志和报告目录
+LOG_DIR="log/${TODAY}/${STUDY}"
+REPORT_DIR="report"
+mkdir -p "${LOG_DIR}" "${REPORT_DIR}"
+
+# 配置日志文件
+MAIN_LOG="${LOG_DIR}/ablation_study.log"
+
 echo "🚀 开始多模态消融实验: ${STUDY}"
+echo "📁 日志目录: ${LOG_DIR}"
+echo "📁 结果将保存到: report/"
 echo "=============================================="
+echo "" | tee -a "${MAIN_LOG}"
+echo "==============================================" | tee -a "${MAIN_LOG}"
+echo "🚀 开始多模态消融实验: ${STUDY}" | tee -a "${MAIN_LOG}"
+echo "📁 日志目录: ${LOG_DIR}" | tee -a "${MAIN_LOG}"
+echo "==============================================" | tee -a "${MAIN_LOG}"
 
 # 创建结果根目录
 ABLRESULTS_DIR="results/ablation/${STUDY}"
-export ABLRESULTS_DIR  # 【关键修复】导出变量供Python子进程使用
+export ABLRESULTS_DIR  # 导出变量供Python子进程使用
 export STUDY           # 导出STUDY变量
 mkdir -p "${ABLRESULTS_DIR}"/{gene,text,fusion}
 
@@ -29,7 +46,7 @@ SEED=42
 K_FOLDS=5
 EPOCHS=20
 LR=0.00005
-MAX_JOBS=3  # 最大并行任务数
+MAX_JOBS=4  # 最大并行任务数
 
 # 【新增】检查特征文件是否存在
 check_features() {
@@ -419,6 +436,7 @@ echo "📈 生成最终对比表格"
 echo "=============================================="
 
 FINAL_CSV="${ABLRESULTS_DIR}/final_comparison.csv"
+REPORT_CSV="report/${TODAY}_${STUDY}_ablation_comparison.csv"
 
 # 【加固】等待所有后台任务完成
 wait
@@ -543,5 +561,12 @@ echo "✅ 消融实验完成！"
 echo "=============================================="
 echo "📁 结果目录: ${ABLRESULTS_DIR}"
 echo "📊 对比表格: ${FINAL_CSV}"
+echo "📋 报告文件: ${REPORT_CSV}"
 echo "⚡ 并行任务数: ${MAX_JOBS}"
 echo "=============================================="
+
+# 【新增】复制最终结果到 report 目录
+if [ -f "${FINAL_CSV}" ]; then
+    cp "${FINAL_CSV}" "${REPORT_CSV}"
+    echo "📁 已复制结果到: ${REPORT_CSV}"
+fi

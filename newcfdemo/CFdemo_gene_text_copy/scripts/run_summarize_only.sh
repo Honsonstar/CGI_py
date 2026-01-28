@@ -11,13 +11,27 @@ if [ -z "$1" ]; then
 fi
 
 STUDY=$1
+TODAY=$(date +%Y-%m-%d)
 ABLRESULTS_DIR="results/ablation/${STUDY}"
 export ABLRESULTS_DIR  # 导出变量
 export STUDY           # 导出变量
 
+# 【修复】检查是否存在双层路径
+if [ -d "results/results/ablation/${STUDY}" ]; then
+    echo "⚠️  检测到双层路径 results/results/ablation/"
+    ABLRESULTS_DIR="results/results/ablation/${STUDY}"
+    export ABLRESULTS_DIR
+    echo "📁 已切换到: ${ABLRESULTS_DIR}"
+fi
+
+# 创建报告目录
+REPORT_DIR="report"
+mkdir -p "${REPORT_DIR}"
+
 echo "🔄 只运行汇总步骤: ${STUDY}"
 echo "=============================================="
 echo "📁 结果目录: ${ABLRESULTS_DIR}"
+echo "📋 报告将保存到: ${REPORT_DIR}/"
 echo ""
 
 cd /root/autodl-tmp/newcfdemo/CFdemo_gene_text_copy
@@ -97,15 +111,18 @@ if missing_folds:
 else:
     print(f"   - 完成度: 100%")
 
+# 获取环境变量中的路径
+gene_summary_path = os.environ.get('ABLRESULTS_DIR', '') + '/gene/summary.csv'
+
 if dfs:
     result = pd.concat(dfs).sort_values('fold')
-    result.to_csv('${GENE_SUMMARY}', index=False)
+    result.to_csv(gene_summary_path, index=False)
     mean_cindex = result['val_cindex'].mean()
     print(f'\n✅ Gene Only 汇总完成: {found_count}/5 折')
     print(f'   平均 C-Index: {mean_cindex:.4f}')
 else:
     print('\n❌ 错误: 没有任何折的结果文件可用')
-    pd.DataFrame(columns=['folds', 'val_cindex']).to_csv('${GENE_SUMMARY}', index=False)
+    pd.DataFrame(columns=['folds', 'val_cindex']).to_csv(gene_summary_path, index=False)
 EOF_SUMMARY
 
 # 汇总 Text Only 结果
@@ -176,15 +193,18 @@ if missing_folds:
 else:
     print(f"   - 完成度: 100%")
 
+# 获取环境变量中的路径
+text_summary_path = os.environ.get('ABLRESULTS_DIR', '') + '/text/summary.csv'
+
 if dfs:
     result = pd.concat(dfs).sort_values('fold')
-    result.to_csv('${TEXT_SUMMARY}', index=False)
+    result.to_csv(text_summary_path, index=False)
     mean_cindex = result['val_cindex'].mean()
     print(f'\n✅ Text Only 汇总完成: {found_count}/5 折')
     print(f'   平均 C-Index: {mean_cindex:.4f}')
 else:
     print('\n❌ 错误: 没有任何折的结果文件可用')
-    pd.DataFrame(columns=['folds', 'val_cindex']).to_csv('${TEXT_SUMMARY}', index=False)
+    pd.DataFrame(columns=['folds', 'val_cindex']).to_csv(text_summary_path, index=False)
 EOF_SUMMARY
 
 # 汇总 Fusion 结果
@@ -255,15 +275,18 @@ if missing_folds:
 else:
     print(f"   - 完成度: 100%")
 
+# 获取环境变量中的路径
+fusion_summary_path = os.environ.get('ABLRESULTS_DIR', '') + '/fusion/summary.csv'
+
 if dfs:
     result = pd.concat(dfs).sort_values('fold')
-    result.to_csv('${FUSION_SUMMARY}', index=False)
+    result.to_csv(fusion_summary_path, index=False)
     mean_cindex = result['val_cindex'].mean()
     print(f'\n✅ Fusion 汇总完成: {found_count}/5 折')
     print(f'   平均 C-Index: {mean_cindex:.4f}')
 else:
     print('\n❌ 错误: 没有任何折的结果文件可用')
-    pd.DataFrame(columns=['folds', 'val_cindex']).to_csv('${FUSION_SUMMARY}', index=False)
+    pd.DataFrame(columns=['folds', 'val_cindex']).to_csv(fusion_summary_path, index=False)
 EOF_SUMMARY
 
 echo ""
@@ -273,4 +296,14 @@ echo "📁 结果文件:"
 echo "   - Gene: ${ABLRESULTS_DIR}/gene/summary.csv"
 echo "   - Text: ${ABLRESULTS_DIR}/text/summary.csv"
 echo "   - Fusion: ${ABLRESULTS_DIR}/fusion/summary.csv"
+echo ""
+echo "📋 报告文件 (复制到 report/):"
+for mode in gene text fusion; do
+    src="${ABLRESULTS_DIR}/${mode}/summary.csv"
+    dst="report/${TODAY}_${STUDY}_${mode}_summary.csv"
+    if [ -f "$src" ]; then
+        cp "$src" "$dst"
+        echo "   ✓ ${dst}"
+    fi
+done
 echo "=============================================="
