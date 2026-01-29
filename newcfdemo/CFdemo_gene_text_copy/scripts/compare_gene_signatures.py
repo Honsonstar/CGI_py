@@ -38,38 +38,55 @@ def load_global_cpog_genes(study):
     return set()
 
 def load_nested_cpog_genes(study):
-    """加载嵌套CV各折筛选的基因"""
+    """加载嵌套CV各折筛选的基因，同时统计训练样本数"""
     features_dir = f'features/{study}'
-    
+    split_dir = f'splits/nested_cv/{study}'
+
     if not os.path.exists(features_dir):
         print(f"❌ 找不到目录: {features_dir}")
         return {}
-    
+
     nested_genes = {}
-    
+
     for fold in range(5):
         gene_file = f'{features_dir}/fold_{fold}_genes.csv'
-        
+
         if not os.path.exists(gene_file):
             print(f"⚠️  找不到: {gene_file}")
             continue
-        
+
         try:
             df = pd.read_csv(gene_file)
-            
-            # 【关键修复】基因名是列名，不是 'gene' 列的值
-            exclude_cols = ['sample_id', 'OS', 'Censor', 'case_id', 'Unnamed: 0', 'survival_months']
-            genes = [c for c in df.columns if c not in exclude_cols]
-            
+
+            # 【关键修复】基因名在行中（第一列，列名为 'gene_name'），不是列名
+            # 需要读取第一列的值作为基因列表
+            if 'gene_name' in df.columns:
+                genes = df['gene_name'].dropna().unique().tolist()
+            else:
+                # 兜底：尝试找可能的基因名列
+                id_cols = ['sample_id', 'case_id', 'Unnamed: 0', 'patient_id']
+                gene_col = [c for c in df.columns if c not in id_cols and c not in ['OS', 'Censor', 'survival_months']]
+                if gene_col:
+                    genes = df[gene_col[0]].dropna().unique().tolist()
+                else:
+                    genes = []
+
+            # 统计训练样本数
+            n_train = 0
+            split_file = f'{split_dir}/nested_splits_{fold}.csv'
+            if os.path.exists(split_file):
+                split_df = pd.read_csv(split_file)
+                n_train = split_df['train'].notna().sum()
+
             if not genes:
                 print(f"⚠️ Fold {fold} 文件为空或无基因列")
             else:
-                nested_genes[fold] = set(genes)
-                print(f"✓ 嵌套CV Fold {fold} 基因数: {len(nested_genes[fold])}")
-                
+                nested_genes[fold] = {'genes': set(genes), 'n_train': n_train}
+                print(f"✓ 嵌套CV Fold {fold}: {len(genes)} 基因, {n_train} 训练样本")
+
         except Exception as e:
             print(f"❌ 读取 Fold {fold} 出错: {e}")
-    
+
     return nested_genes
 
 def load_external_signatures():
@@ -126,51 +143,59 @@ def compare_signatures(study):
         print("❌ 无法加载任何嵌套CV基因，请检查 features/ 目录")
         return
 
+    # 提取基因集合和训练样本数
+    folds = sorted(nested_genes.keys())
+    genes_dict = {f: nested_genes[f]['genes'] for f in folds}
+    n_train_dict = {f: nested_genes[f]['n_train'] for f in folds}
+
     # 1. 嵌套CV内部一致性 (这是重点)
     print("\n📊 1. 嵌套CV 内部稳定性 (Fold间重合度)")
     print("-" * 60)
-    
-    folds = sorted(nested_genes.keys())
+
     matrix = np.zeros((len(folds), len(folds)))
-    
+
     consistency_scores = []
-    
+
     # 表头
-    print(f"{'Folds':<10} | {'交集数':<8} | {'Jaccard':<8} | {'重合率(%)'}")
+    print(f"{'Folds':<10} | {'交集数':<8} | {'重合率(%)':<10}")
     print("-" * 50)
-    
+
     for i in range(len(folds)):
         for j in range(len(folds)):
             f_i, f_j = folds[i], folds[j]
-            inter, jac, rate = calculate_overlap(nested_genes[f_i], nested_genes[f_j])
-            matrix[i, j] = jac
-            
+            inter, jac, rate = calculate_overlap(genes_dict[f_i], genes_dict[f_j])
+            matrix[i, j] = rate  # 使用重合率
+
             if i < j:
-                consistency_scores.append(jac)
-                print(f"{f_i} vs {f_j:<4} | {len(inter):<8} | {jac:.4f}   | {rate*100:.1f}%")
+                consistency_scores.append(rate)
+                print(f"{f_i} vs {f_j:<4} | {len(inter):<8} | {rate*100:.1f}%")
 
     avg_consistency = np.mean(consistency_scores) if consistency_scores else 0
     print("-" * 50)
-    print(f"👉 平均一致性 (Jaccard): {avg_consistency:.4f}")
+    print(f"👉 平均一致性 (重合率): {avg_consistency:.4f}")
     
     # 2. 全局 vs 嵌套 (如果有全局结果)
     if global_genes:
         print("\n📊 2. 全局CPCG vs 嵌套CV各折")
         print("-" * 60)
         for fold in folds:
-            inter, jac, rate = calculate_overlap(global_genes, nested_genes[fold])
+            inter, jac, rate = calculate_overlap(global_genes, genes_dict[fold])
             print(f"Global vs Fold {fold}: 交集 {len(inter)} 个 (重合率 {rate*100:.1f}%)")
     
-    # 3. 生成热图
+    # 3. 生成热力图
     try:
-        plt.figure(figsize=(8, 6))
-        sns.heatmap(matrix, annot=True, fmt='.2f', cmap='Blues', 
-                   xticklabels=[f'F{f}' for f in folds], 
+        plt.figure(figsize=(7, 5))
+
+        # 计算平均训练样本数
+        avg_train = int(np.mean(list(n_train_dict.values())))
+
+        sns.heatmap(matrix, annot=True, fmt='.2f', cmap='Blues',
+                   xticklabels=[f'F{f}' for f in folds],
                    yticklabels=[f'F{f}' for f in folds])
-        plt.title(f'{study} Nested CV Consistency (Jaccard Index)')
+        plt.title(f'{study} Nested CV Consistency (Overlap Rate)\nAvg. Training Samples: {avg_train}', fontsize=11)
         out_png = f'results/gene_overlap_heatmap_{study}.png'
         os.makedirs('results', exist_ok=True)
-        plt.savefig(out_png)
+        plt.savefig(out_png, dpi=150, bbox_inches='tight')
         print(f"\n✅ 热图已保存: {out_png}")
     except Exception as e:
         print(f"无法生成热图: {e}")
@@ -180,11 +205,11 @@ def compare_signatures(study):
     for i in range(len(folds)):
         for j in range(i+1, len(folds)):
             fi, fj = folds[i], folds[j]
-            inter, jac, rate = calculate_overlap(nested_genes[fi], nested_genes[fj])
+            inter, jac, rate = calculate_overlap(genes_dict[fi], genes_dict[fj])
             rows.append({
-                'Fold_A': fi, 'Fold_B': fj, 
-                'Intersection': len(inter), 
-                'Jaccard': jac, 
+                'Fold_A': fi, 'Fold_B': fj,
+                'Intersection': len(inter),
+                'Jaccard': jac,
                 'Overlap_Rate': rate
             })
     pd.DataFrame(rows).to_csv(f'results/{study}_overlap_stats.csv', index=False)

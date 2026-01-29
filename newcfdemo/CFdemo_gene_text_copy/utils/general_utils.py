@@ -208,16 +208,20 @@ def _seed_torch(seed=7):
 
 def _create_results_dir(args):
     r"""
-    Creates a dir to store results for this experiment. Adds .gitignore 
-    
+    Creates a dir to store results for this experiment. Adds .gitignore
+
     Args:
         - args: argspace.Namespace
-    
+
     Return:
-        - None 
-    
+        - None
+
     """
-    args.results_dir = os.path.join("./results", args.results_dir) # create an experiment specific subdir in the results dir 
+    # 【修复】如果args.results_dir已经是绝对路径或./results开头，则不重复添加
+    # 确保只使用单层路径 results/ablation/...
+    if not args.results_dir.startswith('./results') and not args.results_dir.startswith('results/'):
+        args.results_dir = os.path.join("./results", args.results_dir)
+
     if not os.path.isdir(args.results_dir):
         os.makedirs(args.results_dir, exist_ok=True)
         #---> add gitignore to results dir
@@ -226,7 +230,7 @@ def _create_results_dir(args):
         f.write("*/\n")
         f.write("!.gitignore")
         f.close()
-    
+
     #---> results for this specific experiment
     args.results_dir = os.path.join(args.results_dir, args.param_code)
     if not os.path.isdir(args.results_dir):
