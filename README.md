@@ -50,9 +50,13 @@ print(f"Found {len(causal_genes)} causal genes")
 
 ## References
 
+- Original MATLAB implementation: [CGI](https://github.com/Causality-Inference/CGI.git)
+
 - Zhang, K., Peters, J., Janzing, D., & Schölkopf, B. (2011).
   Kernel-based conditional independence test and application in causal discovery.
   arXiv:1202.2775
+
+- Causal Gene Identification Using Non-Linear Regression-Based Independence Tests
 
 ## License
 
