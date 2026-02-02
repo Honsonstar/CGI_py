@@ -32,9 +32,8 @@ def kcit(X: np.ndarray, Y: np.ndarray, Z: np.ndarray = None,
         stat: test statistic
         p_val: p-value
     """
-    # Default parameters
-    if width == 0:
-        width = 0.8
+    # width=0 is passed through to uind_test/cind_test_new_with_gp
+    # for automatic selection (median heuristic or sample-size based)
 
     # Check dimensions
     if X.ndim == 1:

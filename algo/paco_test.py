@@ -30,7 +30,11 @@ def paco_test(x: np.ndarray, y: np.ndarray, Z: np.ndarray = None, alpha: float =
 
     if Z is None or Z.size == 0:
         # Unconditional test: compute Pearson correlation
-        pcc, _ = stats.pearsonr(x, y)
+        # Handle zero standard deviation case
+        if np.std(x) == 0 or np.std(y) == 0:
+            pcc = 0
+        else:
+            pcc, _ = stats.pearsonr(x, y)
         ncit = 0
     else:
         Z = Z.reshape(n, -1)
@@ -43,7 +47,11 @@ def paco_test(x: np.ndarray, y: np.ndarray, Z: np.ndarray = None, alpha: float =
         wy, _, _, _ = np.linalg.lstsq(Z, y, rcond=None)
         ry = y - Z @ wy
 
-        pcc, _ = stats.pearsonr(rx, ry)
+        # Handle zero standard deviation case
+        if np.std(rx) == 0 or np.std(ry) == 0:
+            pcc = 0
+        else:
+            pcc, _ = stats.pearsonr(rx, ry)
         ncit = Z.shape[1] - 1  # Number of conditioning variables (excluding intercept)
 
     # Fisher's z-transform

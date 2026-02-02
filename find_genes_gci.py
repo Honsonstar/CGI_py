@@ -13,7 +13,11 @@ def normalize_data(data: np.ndarray) -> np.ndarray:
     normalized = data.copy()
     for i in range(data.shape[1]):
         col = data[:, i]
-        normalized[:, i] = (col - np.mean(col)) / np.std(col)
+        std = np.std(col)
+        if std > 0:
+            normalized[:, i] = (col - np.mean(col)) / std
+        else:
+            normalized[:, i] = col - np.mean(col)
     return normalized
 
 
@@ -64,7 +68,7 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                         ind2, _, _ = kcit(res1, res2, np.array([[]]), width=0, alpha=alpha)
                         if ind2:
                             temp_res.append(res1)
-                            temp_z.append([idx1[k], 0])
+                            temp_z.append([idx1[k], -1])  # Use -1 as padding (invalid index in Python)
                             non.append(idx1[j])
                             break
                     except:
@@ -136,7 +140,7 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
         # Same for column 2
         for row_idx in range(len(temp_z)):
             z_val = int(temp_z[row_idx, 1])
-            if z_val > 0 and z_val in pa_set and row_idx < temp_res.shape[1]:
+            if z_val != -1 and z_val in pa_set and row_idx < temp_res.shape[1]:
                 ind = kcit(data[:, z_val], temp_res[:, row_idx],
                           np.array([[]]), width=0, alpha=alpha)[0]
                 if ind and z_val not in found_genes_1st:
@@ -174,8 +178,8 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
 
     print(f'  Found genes by 2nd order: {len(found_genes_2nd)}')
 
-    # results
-    found_genes = list(set(found_genes_1st + found_genes_2nd))
+    # results - sort for deterministic output (MATLAB's unique returns sorted)
+    found_genes = sorted(set(found_genes_1st + found_genes_2nd))
 
     return {
         'non': non,
