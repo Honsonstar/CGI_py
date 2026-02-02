@@ -30,7 +30,8 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
     data = normalize_data(data)
 
     if hyp is None:
-        hyp = np.array([4.0, np.log(4.0), np.log(np.sqrt(0.01))])
+        # log(length_scale)=0 -> length_scale=1.0,更适合 normalized data
+        hyp = np.array([0.0, np.log(1.0), np.log(np.sqrt(0.01))])
 
     temp_res = []
     temp_z = []
@@ -41,7 +42,7 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
     for i in range(n):
         ind1 = paco_test(x, data[:, i], np.array([]), alpha)
         if ind1:
-            ind2, _, _ = kcit(x, data[:, i], np.array([[]]), width=0, alpha=alpha)
+            ind2, _, _ = kcit(x, data[:, i], np.array([[]]), alpha=alpha)
             if ind2:
                 non.append(i)
 
@@ -65,7 +66,7 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                         yf = fit_gpr(z, y, cov, hyp, Ncg)
                         res2 = yf - y
 
-                        ind2, _, _ = kcit(res1, res2, np.array([[]]), width=0, alpha=alpha)
+                        ind2, _, _ = kcit(res1, res2, np.array([[]]), alpha=alpha)
                         if ind2:
                             temp_res.append(res1)
                             temp_z.append([idx1[k], -1])  # Use -1 as padding (invalid index in Python)
@@ -101,7 +102,7 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                         yf = fit_gpr(z_combined, y, cov, hyp, Ncg)
                         res2 = yf - y
 
-                        ind2, _, _ = kcit(res1, res2, np.array([[]]), width=0, alpha=alpha)
+                        ind2, _, _ = kcit(res1, res2, np.array([[]]), alpha=alpha)
                         if ind2:
                             temp_res.append(res1)
                             temp_z.append([idx2[M[k][0]], idx2[M[k][1]]])
@@ -133,7 +134,7 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
             z_val = int(temp_z[row_idx, 0])
             if z_val in pa_set and row_idx < temp_res.shape[1]:
                 ind = kcit(data[:, z_val], temp_res[:, row_idx],
-                          np.array([[]]), width=0, alpha=alpha)[0]
+                          np.array([[]]), alpha=alpha)[0]
                 if ind and z_val not in found_genes_1st:
                     found_genes_1st.append(z_val)
 
@@ -142,7 +143,7 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
             z_val = int(temp_z[row_idx, 1])
             if z_val != -1 and z_val in pa_set and row_idx < temp_res.shape[1]:
                 ind = kcit(data[:, z_val], temp_res[:, row_idx],
-                          np.array([[]]), width=0, alpha=alpha)[0]
+                          np.array([[]]), alpha=alpha)[0]
                 if ind and z_val not in found_genes_1st:
                     found_genes_1st.append(z_val)
 
@@ -166,8 +167,8 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                 res1 = xf - x
 
                 # Note: MATLAB has a bug - both use ind3 instead of ind3 and ind4
-                ind3, _, _ = kcit(res1, z[:, 0:1], np.array([[]]), width=0, alpha=alpha)
-                ind4, _, _ = kcit(res1, z[:, 1:2], np.array([[]]), width=0, alpha=alpha)
+                ind3, _, _ = kcit(res1, z[:, 0:1], np.array([[]]), alpha=alpha)
+                ind4, _, _ = kcit(res1, z[:, 1:2], np.array([[]]), alpha=alpha)
 
                 if ind3 and j[0] not in found_genes_2nd:
                     found_genes_2nd.append(j[0])
