@@ -52,11 +52,13 @@ print(f"Found {len(causal_genes)} causal genes")
 
 - Original MATLAB implementation: [CGI](https://github.com/Causality-Inference/CGI.git)
 
+- H. Zhang, C. Yan, Y. Xia, J. Guan and S. Zhou, "Causal Gene Identification Using Non-Linear Regression-Based Independence Tests,"
+  IEEE/ACM Transactions on Computational Biology and Bioinformatics, vol. 20, no. 1, Jan.-Feb. 2023,
+  doi: 10.1109/TCBB.2022.3149864.
+
 - Zhang, K., Peters, J., Janzing, D., & Schölkopf, B. (2011).
   Kernel-based conditional independence test and application in causal discovery.
   arXiv:1202.2775
-
-- Causal Gene Identification Using Non-Linear Regression-Based Independence Tests
 
 ## License
 
