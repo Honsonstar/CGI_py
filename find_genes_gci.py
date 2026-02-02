@@ -30,7 +30,7 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
     data = normalize_data(data)
 
     if hyp is None:
-        hyp = np.array([4.0, np.log(4.0), np.log(np.sqrt(0.01))])
+        hyp = np.array([np.log(4.0), np.log(4.0), np.log(np.sqrt(0.01))])
 
     temp_res = []
     temp_z = []
