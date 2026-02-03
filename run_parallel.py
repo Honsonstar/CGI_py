@@ -36,7 +36,7 @@ def run_0order_test(args):
     i, x, data_i, alpha = args
     ind1 = paco_test(x, data_i, np.array([]), alpha)
     if ind1:
-        ind2, _, _ = kcit(x, data_i, np.array([[]]), width=0, alpha=alpha)
+        ind2, _, _ = kcit(x, data_i, np.array([[]]), alpha=alpha)
         if ind2:
             return i
     return None
@@ -55,7 +55,7 @@ def run_1order_test(args):
                 res1 = xf - x
                 yf = fit_gpr(z, y, cov, hyp, Ncg)
                 res2 = yf - y
-                ind2, _, _ = kcit(res1, res2, np.array([[]]), width=0, alpha=alpha)
+                ind2, _, _ = kcit(res1, res2, np.array([[]]), alpha=alpha)
                 if ind2:
                     return j
             except:
@@ -78,7 +78,8 @@ def find_genes_gci_parallel(data: np.ndarray, alpha: float = 0.05,
     data = normalize_data(data)
 
     if hyp is None:
-        hyp = np.array([4.0, np.log(4.0), np.log(np.sqrt(0.01))])
+        # 必须使用 log(4.0) 以匹配 MATLAB 的行为
+        hyp = np.array([np.log(4.0), np.log(4.0), np.log(np.sqrt(0.01))])
 
     non = []
 

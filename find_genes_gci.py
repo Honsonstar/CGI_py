@@ -71,7 +71,8 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                             temp_z.append([idx1[k], -1])  # Use -1 as padding (invalid index in Python)
                             non.append(idx1[j])
                             break
-                    except:
+                    except Exception as e:
+                        print(f'    Error in 1st order test (j={idx1[j]}, k={idx1[k]}): {e}')
                         non.append(idx1[j])
                         break
 
@@ -106,7 +107,8 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                             temp_res.append(res1)
                             temp_z.append([idx2[M[k][0]], idx2[M[k][1]]])
                             non.append(j)
-                    except:
+                    except Exception as e:
+                        print(f'  Error in 2nd order test (j={j}): {e}')
                         non.append(j)
                         break
 
@@ -173,8 +175,8 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                     found_genes_2nd.append(j[0])
                 if ind4 and j[1] not in found_genes_2nd:
                     found_genes_2nd.append(j[1])
-            except:
-                pass
+            except Exception as e:
+                print(f'  Error in regression 2nd order (p={p+1}/{lenM}): {e}')
 
     print(f'  Found genes by 2nd order: {len(found_genes_2nd)}')
 

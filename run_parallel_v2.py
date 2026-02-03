@@ -31,7 +31,7 @@ def run_0order_test(i, alpha):
     from CGI_py.algo import paco_test, kcit
     ind1 = paco_test(X_GLOBAL, DATA_GLOBAL[:, i], np.array([]), alpha)
     if ind1:
-        ind2, _, _ = kcit(X_GLOBAL, DATA_GLOBAL[:, i], np.array([[]]), width=0, alpha=alpha)
+        ind2, _, _ = kcit(X_GLOBAL, DATA_GLOBAL[:, i], np.array([[]]), alpha=alpha)
         if ind2:
             return i
     return None
@@ -51,7 +51,7 @@ def run_1order_test(args):
                 res1 = xf - X_GLOBAL
                 yf = fit_gpr(z, y, cov, hyp, Ncg)
                 res2 = yf - y
-                ind2, _, _ = kcit(res1, res2, np.array([[]]), width=0, alpha=alpha)
+                ind2, _, _ = kcit(res1, res2, np.array([[]]), alpha=alpha)
                 if ind2:
                     return (j, res1.copy())
             except:
@@ -76,8 +76,8 @@ def run_2order_test(args):
             try:
                 xf = fit_gpr(z, X_GLOBAL, cov, hyp, Ncg)
                 res1 = xf - X_GLOBAL
-                ind2, _, _ = kcit(res1, z1.reshape(-1, 1), np.array([[]]), width=0, alpha=alpha)
-                ind3, _, _ = kcit(res1, z2.reshape(-1, 1), np.array([[]]), width=0, alpha=alpha)
+                ind2, _, _ = kcit(res1, z1.reshape(-1, 1), np.array([[]]), alpha=alpha)
+                ind3, _, _ = kcit(res1, z2.reshape(-1, 1), np.array([[]]), alpha=alpha)
                 if ind2 or ind3:
                     return j
             except:
@@ -105,7 +105,8 @@ def find_genes_gci_full(data: np.ndarray, alpha: float = 0.05,
             data[:, i] = (col - np.mean(col)) / std
 
     if hyp is None:
-        hyp = np.array([4.0, np.log(4.0), np.log(np.sqrt(0.01))])
+        # 必须使用 log(4.0) 以匹配 MATLAB 的行为
+        hyp = np.array([np.log(4.0), np.log(4.0), np.log(np.sqrt(0.01))])
 
     # 使用唯一名称避免冲突
     unique_id = str(uuid.uuid4())[:8]
@@ -211,7 +212,7 @@ def find_genes_gci_full(data: np.ndarray, alpha: float = 0.05,
             z_idx = int(temp_z[k, 0])
             if z_idx in pa and k < temp_res.shape[1]:
                 ind = kcit(DATA_GLOBAL[:, z_idx], temp_res[:, k],
-                          np.array([[]]), width=0, alpha=alpha)[0]
+                          np.array([[]]), alpha=alpha)[0]
                 if ind:
                     found_genes_1st.append(z_idx)
 
@@ -230,8 +231,8 @@ def find_genes_gci_full(data: np.ndarray, alpha: float = 0.05,
                 xf = fit_gpr(z, X_GLOBAL, cov, hyp, Ncg)
                 res1 = xf - X_GLOBAL
 
-                ind3, _, _ = kcit(res1, z[:, 0:1], np.array([[]]), width=0, alpha=alpha)
-                ind4, _, _ = kcit(res1, z[:, 1:2], np.array([[]]), width=0, alpha=alpha)
+                ind3, _, _ = kcit(res1, z[:, 0:1], np.array([[]]), alpha=alpha)
+                ind4, _, _ = kcit(res1, z[:, 1:2], np.array([[]]), alpha=alpha)
 
                 if ind3 and g1 not in found_genes_2nd:
                     found_genes_2nd.append(g1)
