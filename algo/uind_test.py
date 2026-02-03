@@ -55,8 +55,11 @@ def uind_test(x: np.ndarray, y: np.ndarray, alpha: float = 0.8, width: float = 0
     H = np.eye(T) - np.ones((T, T)) / T
 
     # Compute kernel matrices
-    Kx, _ = kernel(x.reshape(-1, 1), x.reshape(-1, 1), np.array([theta, 1]))
-    Ky, _ = kernel(y.reshape(-1, 1), y.reshape(-1, 1), np.array([theta, 1]))
+    res_x = kernel(x.reshape(-1, 1), x.reshape(-1, 1), np.array([theta, 1]))
+    Kx = res_x[0] if isinstance(res_x, tuple) else res_x
+
+    res_y = kernel(y.reshape(-1, 1), y.reshape(-1, 1), np.array([theta, 1]))
+    Ky = res_y[0] if isinstance(res_y, tuple) else res_y
 
     Kx = H @ Kx @ H
     Ky = H @ Ky @ H
@@ -65,8 +68,11 @@ def uind_test(x: np.ndarray, y: np.ndarray, alpha: float = 0.8, width: float = 0
 
     # Compute eigenvalues
     num_eig = min(T // 2, 100)
-    eig_Kx, _ = eigdec((Kx + Kx.T) / 2, num_eig)
-    eig_Ky, _ = eigdec((Ky + Ky.T) / 2, num_eig)
+    res_eig_x = eigdec((Kx + Kx.T) / 2, num_eig)
+    eig_Kx = res_eig_x[0] if isinstance(res_eig_x, tuple) else res_eig_x
+
+    res_eig_y = eigdec((Ky + Ky.T) / 2, num_eig)
+    eig_Ky = res_eig_y[0] if isinstance(res_eig_y, tuple) else res_eig_y
 
     # Stack eigenvalues for product computation
     eig_Kx_2d = eig_Kx.reshape(-1, 1)

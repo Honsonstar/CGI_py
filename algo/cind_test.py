@@ -10,12 +10,12 @@ Copyright (c) 2010-2011
 import numpy as np
 from scipy import stats
 from scipy import linalg
+from scipy.optimize import minimize
 from .kernel import kernel
 from .eigdec import eigdec
 from .pdinv import pdinv
 from .medbw import medbw
 from .gpr import gpr_multi
-from .minimize import minimize
 from .covariance import cov_sum
 
 
@@ -79,8 +79,13 @@ def cind_test_new_with_gp(x: np.ndarray, y: np.ndarray, z: np.ndarray,
         max_eig_x = min(400, T // 4)
         max_eig_y = min(200, T // 5)
 
-        eig_Kx, eix = eigdec((Kx + Kx.T) / 2, max_eig_x)
-        eig_Ky, eiy = eigdec((Ky + Ky.T) / 2, max_eig_y)
+        res_eig_x = eigdec((Kx + Kx.T) / 2, max_eig_x)
+        eig_Kx = res_eig_x[0] if isinstance(res_eig_x, tuple) else res_eig_x
+        eix = res_eig_x[1] if isinstance(res_eig_x, tuple) else res_eig_x
+
+        res_eig_y = eigdec((Ky + Ky.T) / 2, max_eig_y)
+        eig_Ky = res_eig_y[0] if isinstance(res_eig_y, tuple) else res_eig_y
+        eiy = res_eig_y[1] if isinstance(res_eig_y, tuple) else res_eig_y
 
         # Filter small eigenvalues
         IIx = eig_Kx > max(eig_Kx) * Thresh
@@ -99,17 +104,21 @@ def cind_test_new_with_gp(x: np.ndarray, y: np.ndarray, z: np.ndarray,
         scale_x = 2 * np.sqrt(T) * eix @ np.diag(np.sqrt(eig_Kx)) / np.sqrt(eig_Kx[0])
         scale_y = 2 * np.sqrt(T) * eiy @ np.diag(np.sqrt(eig_Ky)) / np.sqrt(eig_Ky[0])
 
-        # Optimize hyperparameters for X
+        # Optimize hyperparameters for X using scipy.optimize.minimize (L-BFGS-B)
         def nlml_x(theta):
             return gpr_multi(theta, covfunc, z, scale_x)
 
-        logtheta_x, _, _ = minimize(logtheta0.copy(), nlml_x, -500)
+        res_x = minimize(nlml_x, logtheta0.copy(), method='L-BFGS-B',
+                         options={'maxiter': 500, 'disp': False})
+        logtheta_x = res_x.x
 
         # Optimize hyperparameters for Y
         def nlml_y(theta):
             return gpr_multi(theta, covfunc, z, scale_y)
 
-        logtheta_y, _, _ = minimize(logtheta0.copy(), nlml_y, -500)
+        res_y = minimize(nlml_y, logtheta0.copy(), method='L-BFGS-B',
+                         options={'maxiter': 500, 'disp': False})
+        logtheta_y = res_y.x
 
         # Compute kernel matrices for z
         covfunc_z = ['covSEard']
@@ -147,8 +156,13 @@ def cind_test_new_with_gp(x: np.ndarray, y: np.ndarray, z: np.ndarray,
 
     # Compute eigenvalues of the product
     num_eig = T
-    eig_Kxz, eivx = eigdec((Kxz + Kxz.T) / 2, num_eig)
-    eig_Kyz, eivy = eigdec((Kyz + Kyz.T) / 2, num_eig)
+    res_eig_xz = eigdec((Kxz + Kxz.T) / 2, num_eig)
+    eig_Kxz = res_eig_xz[0] if isinstance(res_eig_xz, tuple) else res_eig_xz
+    eivx = res_eig_xz[1] if isinstance(res_eig_xz, tuple) else res_eig_xz
+
+    res_eig_yz = eigdec((Kyz + Kyz.T) / 2, num_eig)
+    eig_Kyz = res_eig_yz[0] if isinstance(res_eig_yz, tuple) else res_eig_yz
+    eivy = res_eig_yz[1] if isinstance(res_eig_yz, tuple) else res_eig_yz
 
     IIx = eig_Kxz > max(eig_Kxz) * Thresh
     IIy = eig_Kyz > max(eig_Kyz) * Thresh
@@ -180,7 +194,8 @@ def cind_test_new_with_gp(x: np.ndarray, y: np.ndarray, z: np.ndarray,
     Cri, p_val = -1, -1
 
     if Bootstrap:
-        eig_uu, _ = eigdec(uu_prod, min(T, Size_u))
+        res_eig_uu = eigdec(uu_prod, min(T, Size_u))
+        eig_uu = res_eig_uu[0] if isinstance(res_eig_uu, tuple) else res_eig_uu
         II_f = eig_uu > max(eig_uu) * Thresh
         eig_uu = eig_uu[II_f]
 
