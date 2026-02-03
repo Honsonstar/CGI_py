@@ -1,66 +1,38 @@
 """
-KCIT - Kernel Conditional Independence Test
-
-A wrapper for unconditional and conditional independence tests using
-kernel-based methods (HSIC).
-
-Copyright (c) 2011 Kun Zhang, Jonas Peters
+KCIT - Kernel-based Conditional Independence Test
 """
-
 import numpy as np
 from .uind_test import uind_test
 from .cind_test import cind_test_new_with_gp
 
+def kcit(x, y, z=None, width=0, alpha=0.05): # 虽然这里接收 0.05...
+    
+    x = np.array(x).flatten()
+    y = np.array(y).flatten()
+    
+    # --- 关键修正：强制使用 alpha = 0.8 以匹配 MATLAB KCIT.m ---
+    # MATLAB KCIT.m line 47: UInd_test(..., 0.8, pars.width)
+    force_alpha = 0.8
 
-def kcit(X: np.ndarray, Y: np.ndarray, Z: np.ndarray = None,
-         pairwise: bool = False, bonferroni: bool = False,
-         width: float = 0, alpha: float = 0.05) -> tuple:
-    """
-    Kernel Conditional Independence Test.
-
-    Args:
-        X: (n, d1) matrix of samples for X
-        Y: (n, d2) matrix of samples for Y
-        Z: (n, d3) matrix of samples for conditioning variables, or None
-        pairwise: if True, perform pairwise tests for multi-dimensional variables
-        bonferroni: if True, apply Bonferroni correction
-        width: kernel width (0 for automatic selection)
-        alpha: significance level
-
-    Returns:
-        ind: True if X and Y are independent, False otherwise
-        stat: test statistic
-        p_val: p-value
-    """
-    # width=0 is passed through to uind_test/cind_test_new_with_gp
-    # for automatic selection (median heuristic or sample-size based)
-
-    # Check dimensions
-    if X.ndim == 1:
-        X = X.reshape(-1, 1)
-    if Y.ndim == 1:
-        Y = Y.reshape(-1, 1)
-
-    # This test only works for one-dimensional X and Y
-    if X.shape[1] > 1 or Y.shape[1] > 1:
-        raise ValueError('This test only works for one-dimensional X and Y')
-
-    if Z is None or Z.size == 0:
-        # Unconditional HSIC
-        stat, Cri, p_val, Cri_appr, p_appr = uind_test(X.flatten(), Y.flatten(), alpha, width)
+    if z is None or (isinstance(z, np.ndarray) and z.size == 0):
+        # Unconditional
+        stat, cri, p_val, cri_appr, p_appr = uind_test(x, y, force_alpha, width)
+        # MATLAB KCIT.m: if pval > 0.05 ind=1 else ind=0 (Independence)
+        # 注意：MATLAB 的 ind=1 表示独立(Independence)。
+        # 但 find_Genes_GCI.m 的逻辑是：if KCIT(...) -> non=[non, i] (加入非因果列表)
+        # 所以如果 KCIT 返回 1 (独立)，则它是非因果。
+        
+        # 我们的 kcit 需要返回什么？
+        # MATLAB: return ind (1=Indep, 0=Dep)
+        # Python find_genes_gci.py: if ind2: non.append(i)
+        # 所以我们需要返回 True (独立) 或 False (相关)
+        
+        ind = (p_appr > 0.05) # 这里 0.05 是判断阈值，那个 0.8 是计算临界值的参数
+        return ind, stat, p_appr
     else:
-        # Conditional HSIC with GP regression
-        if Z.ndim == 1:
-            Z = Z.reshape(-1, 1)
-
-        stat, Cri, p_val, Cri_appr, p_appr, _ = cind_test_new_with_gp(
-            X.flatten(), Y.flatten(), Z, alpha, width
-        )
-
-    # Determine independence based on p-value
-    if p_val > alpha:
-        ind = True
-    else:
-        ind = False
-
-    return ind, stat, p_val
+        # Conditional
+        if z.ndim == 1: z = z.reshape(-1, 1)
+        # 同样传递 force_alpha = 0.8
+        p_appr, stat = cind_test_new_with_gp(x, y, z, force_alpha, width)
+        ind = (p_appr > 0.05)
+        return ind, stat, p_appr

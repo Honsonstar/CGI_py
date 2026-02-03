@@ -6,6 +6,7 @@ Python port of find_Genes_GCI.m
 
 import numpy as np
 from scipy.io import loadmat
+import traceback
 from .algo import paco_test, kcit, fit_gpr
 
 
@@ -73,6 +74,9 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                             break
                     except Exception as e:
                         print(f'    Error in 1st order test (j={idx1[j]}, k={idx1[k]}): {e}')
+                        print('    Traceback:')
+                        for line in traceback.format_exc().split('\n'):
+                            print(f'      {line}')
                         non.append(idx1[j])
                         break
 
@@ -109,6 +113,9 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                             non.append(j)
                     except Exception as e:
                         print(f'  Error in 2nd order test (j={j}): {e}')
+                        print('  Traceback:')
+                        for line in traceback.format_exc().split('\n'):
+                            print(f'    {line}')
                         non.append(j)
                         break
 
@@ -177,6 +184,9 @@ def find_genes_gci(data: np.ndarray, alpha: float = 0.05,
                     found_genes_2nd.append(j[1])
             except Exception as e:
                 print(f'  Error in regression 2nd order (p={p+1}/{lenM}): {e}')
+                print('  Traceback:')
+                for line in traceback.format_exc().split('\n'):
+                    print(f'    {line}')
 
     print(f'  Found genes by 2nd order: {len(found_genes_2nd)}')
 

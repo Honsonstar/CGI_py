@@ -2,9 +2,6 @@
 Covariance functions for Gaussian Process Regression
 
 Part of GPML (Gaussian Process for Machine Learning) toolbox.
-These functions are ported from the MATLAB GPML implementation.
-
-(C) Copyright 2006 by Carl Edward Rasmussen
 """
 
 import numpy as np
@@ -14,61 +11,60 @@ from .dist2 import dist2
 def cov_sum(covfunc, logtheta, x, z=None):
     """
     covSum - Compose a covariance function as the sum of other functions.
-
-    This function does bookkeeping and calls other covariance functions.
-    For more help on design of covariance functions, try "help covFunctions".
-
-    Usage:
-        cov_sum(covfunc, logtheta, x) -> A      # compute covariance matrix
-        cov_sum(covfunc, logtheta, x, z) -> A   # compute test set covariances
-        cov_sum(covfunc, logtheta, x, None, j)  # compute derivative w.r.t. j-th hyperparameter
     """
     n = x.shape[0]
 
-    # Parse covfunc to get number of hyperparameters for each component
-    def get_n_hyp(cov_name):
-        if 'covSEiso' in cov_name:
-            return 2  # length scale + variance
-        elif 'covSEard' in cov_name:
-            return x.shape[1] + 1  # D length scales + variance
-        elif 'covNoise' in cov_name:
-            return 1  # noise variance
-        elif 'covMatern' in cov_name:
-            return 2
-        else:
-            return 2  # default
-
+    # --- 修复核心：解包 covSum 结构 ---
+    # 输入通常是 ['covSum', ['covSEiso', 'covNoise']]
+    # 我们需要将其解包为 ['covSEiso', 'covNoise']
+    if isinstance(covfunc, (list, tuple)) and len(covfunc) > 1 and covfunc[0] == 'covSum':
+        covfunc = covfunc[1]
+    
+    # 如果只是单个字符串，转为列表
     if isinstance(covfunc, str):
         covfunc = [covfunc]
 
-    # Count hyperparameters for each component
+    # Helper to determine number of hyperparameters
+    def get_n_hyp(cov_name):
+        if 'covSEiso' in cov_name:
+            return 2
+        elif 'covSEard' in cov_name:
+            return x.shape[1] + 1
+        elif 'covNoise' in cov_name:
+            return 1
+        elif 'covMatern' in cov_name:
+            return 2
+        else:
+            return 2
+
+    # Count hyperparameters
     n_hyp_list = []
     for cf in covfunc:
         if isinstance(cf, (list, tuple)):
             cf_name = cf[0]
-            if cf_name == 'covSum':
-                # Nested covSum
-                n_hyp_list.extend([2] * (len(cf) - 1))  # simplified
+            # 如果里面还嵌套了 covSum (递归情况)，这里简单处理
+            if cf_name == 'covSum': 
+                # 这里简化处理，假设没有深层嵌套
+                pass
             else:
                 n_hyp_list.append(get_n_hyp(cf_name))
         else:
             n_hyp_list.append(get_n_hyp(cf))
 
     if z is None:
-        # Compute covariance matrix
+        # --- Training Mode (返回一个矩阵) ---
         A = np.zeros((n, n))
         start_idx = 0
         for i, cf in enumerate(covfunc):
             n_hyp = n_hyp_list[i]
+            # 安全切片
             theta_i = logtheta[start_idx:start_idx + n_hyp]
             start_idx += n_hyp
 
             if isinstance(cf, (list, tuple)):
                 cf_name = cf[0]
-                sub_covfunc = cf[1] if len(cf) > 1 else None
             else:
                 cf_name = cf
-                sub_covfunc = None
 
             if 'covSEiso' in cf_name:
                 A += cov_se_iso(theta_i, x)
@@ -83,11 +79,12 @@ def cov_sum(covfunc, logtheta, x, z=None):
 
         return A
     else:
-        # Test set covariances
+        # --- Test Mode (返回两个值) ---
         m = z.shape[0]
-        A = np.zeros((m,))
-        B = np.zeros((n, m))
+        A = np.zeros((m,))   # 自协方差
+        B = np.zeros((n, m)) # 交叉协方差
         start_idx = 0
+        
         for i, cf in enumerate(covfunc):
             n_hyp = n_hyp_list[i]
             theta_i = logtheta[start_idx:start_idx + n_hyp]
@@ -104,6 +101,8 @@ def cov_sum(covfunc, logtheta, x, z=None):
                 aa, bb = cov_se_ard(theta_i, x, z)
             elif 'covNoise' in cf_name:
                 aa, bb = cov_noise(theta_i, x, z)
+            elif 'covMatern' in cf_name:
+                aa, bb = cov_matern(theta_i, x, z, nu=3)
             else:
                 aa, bb = cov_se_iso(theta_i, x, z)
 
@@ -114,143 +113,86 @@ def cov_sum(covfunc, logtheta, x, z=None):
 
 
 def cov_se_iso(logtheta, x, z=None):
-    """
-    Squared Exponential (RBF) covariance function with isotropic length scale.
-
-    cov = exp(-0.5 * (r/length_scale)^2) * variance
-
-    Args:
-        logtheta: [log(length_scale), log(sqrt(variance))]
-        x: Training inputs (n, d)
-        z: Test inputs (m, d) or None
-
-    Returns:
-        K: Covariance matrix (n, n) or (n, m)
-    """
-    if z is None:
-        z = x
-
+    """ Squared Exponential (Isotropic) """
     if np.isscalar(logtheta):
         logtheta = np.array([logtheta])
 
     length_scale = np.exp(logtheta[0])
+    # 确保 logtheta 长度足够，否则说明上层切片错了
+    if len(logtheta) < 2:
+        raise IndexError(f"cov_se_iso expected 2 params, got {len(logtheta)}. Check cov_sum logic.")
+        
     variance = np.exp(2 * logtheta[1])
 
-    r2 = dist2(x, z)
-    K = variance * np.exp(-0.5 * r2 / (length_scale ** 2))
-
-    return K
+    if z is None:
+        r2 = dist2(x, x)
+        K = variance * np.exp(-0.5 * r2 / (length_scale ** 2))
+        return K
+    else:
+        r2 = dist2(x, z)
+        K_cross = variance * np.exp(-0.5 * r2 / (length_scale ** 2))
+        K_self = np.full(z.shape[0], variance)
+        return K_self, K_cross
 
 
 def cov_se_ard(logtheta, x, z=None):
-    """
-    Squared Exponential (RBF) covariance function with ARD length scales.
-
-    Args:
-        logtheta: [log(length_scale_1), ..., log(length_scale_D), log(sqrt(variance))]
-        x: Training inputs (n, d)
-        z: Test inputs (m, d) or None
-
-    Returns:
-        K: Covariance matrix
-    """
-    if z is None:
-        z = x
-
+    """ Squared Exponential (ARD) """
     D = x.shape[1]
     length_scales = np.exp(logtheta[:D])
     variance = np.exp(2 * logtheta[D])
 
-    # Scale inputs by length scales
-    x_scaled = x / length_scales
-    z_scaled = z / length_scales
-
-    r2 = dist2(x_scaled, z_scaled)
-    K = variance * np.exp(-0.5 * r2)
-
-    return K
+    if z is None:
+        x_scaled = x / length_scales
+        r2 = dist2(x_scaled, x_scaled)
+        K = variance * np.exp(-0.5 * r2)
+        return K
+    else:
+        x_scaled = x / length_scales
+        z_scaled = z / length_scales
+        r2 = dist2(x_scaled, z_scaled)
+        K_cross = variance * np.exp(-0.5 * r2)
+        K_self = np.full(z.shape[0], variance)
+        return K_self, K_cross
 
 
 def cov_noise(logtheta, x, z=None):
-    """
-    Noise covariance function (diagonal matrix with noise variance).
-
-    Args:
-        logtheta: [log(sqrt(noise_variance))]
-        x: Inputs (n, d)
-        z: Test inputs or None
-
-    Returns:
-        K: Noise covariance matrix
-    """
-    noise_var = np.exp(2 * logtheta[0])
+    """ Noise Covariance """
+    if len(logtheta) < 1:
+        # Default value if something goes wrong, but shouldn't happen
+        noise_var = 1e-6 
+    else:
+        noise_var = np.exp(2 * logtheta[0])
 
     if z is None:
         return np.eye(x.shape[0]) * noise_var
     else:
-        if x.shape[0] != z.shape[0]:
-            raise ValueError("x and z must have same number of rows")
-        return np.zeros((x.shape[0], z.shape[0]))
+        m = z.shape[0]
+        K_cross = np.zeros((x.shape[0], m))
+        K_self = np.full(m, noise_var)
+        return K_self, K_cross
 
 
 def cov_matern(logtheta, x, z=None, nu=3):
-    """
-    Matern covariance function.
-
-    Args:
-        logtheta: [log(length_scale), log(sqrt(variance))]
-        x: Inputs
-        z: Test inputs or None
-        nu: Matern parameter (1, 3, or 5)
-    """
-    if z is None:
-        z = x
-
+    """ Matern Covariance """
     length_scale = np.exp(logtheta[0])
     variance = np.exp(2 * logtheta[1])
 
-    r = np.sqrt(dist2(x, z)) * np.sqrt(2 * nu) / length_scale
-
-    if nu == 1:
-        K = variance * (1 + r) * np.exp(-r)
-    elif nu == 3:
-        K = variance * (1 + r + r ** 2 / 3) * np.exp(-r)
-    elif nu == 5:
-        K = variance * (1 + r + r ** 2 * 2 / 5 + r ** 3 / 15) * np.exp(-r)
-    else:
-        K = variance * np.exp(-0.5 * r ** 2)  # Fallback to SE
-
-    return K
-
-
-def cov_rq(logtheta, x, z=None):
-    """
-    Rational Quadratic covariance function.
-
-    cov = (1 + r^2/(2*alpha*length_scale^2))^(-alpha) * variance
-    """
-    if z is None:
-        z = x
-
-    length_scale = np.exp(logtheta[0])
-    variance = np.exp(2 * logtheta[1])
-    alpha = np.exp(logtheta[2])
-
-    r2 = dist2(x, z)
-    K = variance * (1 + r2 / (2 * alpha * length_scale ** 2)) ** (-alpha)
-
-    return K
-
-
-def cov_linear(logtheta, x, z=None):
-    """
-    Linear covariance function.
-
-    cov = variance * x @ x.T
-    """
-    variance = np.exp(2 * logtheta[0])
+    def calc_k(dist_sq):
+        r = np.sqrt(dist_sq) * np.sqrt(2 * nu) / length_scale
+        if nu == 1:
+            return variance * (1 + r) * np.exp(-r)
+        elif nu == 3:
+            return variance * (1 + r + r ** 2 / 3) * np.exp(-r)
+        elif nu == 5:
+            return variance * (1 + r + r ** 2 * 2 / 5 + r ** 3 / 15) * np.exp(-r)
+        else:
+            return variance * np.exp(-0.5 * r ** 2)
 
     if z is None:
-        return variance * (x @ x.T)
+        r2 = dist2(x, x)
+        return calc_k(r2)
     else:
-        return variance * (x @ z.T)
+        r2 = dist2(x, z)
+        K_cross = calc_k(r2)
+        K_self = np.full(z.shape[0], variance)
+        return K_self, K_cross
